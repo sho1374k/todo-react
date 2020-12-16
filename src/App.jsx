@@ -2,19 +2,26 @@ import React from "react";
 // CSS
 import './assets/sass/reset.scss';
 import './assets/sass/style.scss';
+// Components
+import {Header} from "./components/header/header";
+import {Form} from "./components/form/form";
+import {TodoList} from "./components/todo/todo-list";
+import {Doing} from "./components/todo/doing";
+import {Review} from "./components/todo/review";
+import {Done} from "./components/todo/done";
 
 export class App extends React.Component{
   constructor(props){
     super(props);
     this.state = {
       data:[
-        {id:1, title: "タイトル1", content: "コンテンツ1", notYet: true, doing: false, review: false,  done: false, edit: false },
-        {id:2, title: "タイトル2", content: "コンテンツ2", notYet: true, doing: false, review: false,  done: false, edit: false },
-        {id:3, title: "タイトル3", content: "コンテンツ3", notYet: true, doing: false, review: false,  done: false, edit: false },
-        {id:4, title: "タイトル4", content: "コンテンツ4", notYet: true, doing: false, review: false,  done: false, edit: false },
-        {id:5, title: "タイトル5", content: "コンテンツ5", notYet: true, doing: true, review: false,  done: false, edit: false },
-        {id:6, title: "タイトル6", content: "コンテンツ6", notYet: true, doing: false, review: true,  done: false, edit: false },
-        {id:7, title: "タイトル7", content: "コンテンツ7", notYet: true, doing: false, review: false,  done: true, edit: false },
+        {id:1, title: "タイトル1", content: "コンテンツ1", notYet: true, doing: false, review: false,  done: false, edit: false, comment: [], commentForm: false },
+        {id:2, title: "タイトル2", content: "コンテンツ2", notYet: true, doing: false, review: false,  done: false, edit: false, comment: [], commentForm: false },
+        {id:3, title: "タイトル3", content: "コンテンツ3", notYet: true, doing: false, review: false,  done: false, edit: false, comment: [], commentForm: false },
+        {id:4, title: "タイトル4", content: "コンテンツ4", notYet: false, doing: false, review: true,  done: false, edit: false, comment: [{text: "aaa"},], commentForm: false },
+        {id:5, title: "タイトル5", content: "コンテンツ5", notYet: false, doing: true, review: false,  done: false, edit: false, comment: [], commentForm: false },
+        {id:6, title: "タイトル6", content: "コンテンツ6", notYet: true, doing: false, review: true,  done: false, edit: false, comment: [{text: "コメント１"}, {text: "コメント2"}], commentForm: false },
+        {id:7, title: "タイトル7", content: "コンテンツ7", notYet: true, doing: false, review: false,  done: true, edit: false, comment: [], commentForm: false },
       ],
       error:{
         errorTitle: false,
@@ -23,7 +30,10 @@ export class App extends React.Component{
       editError:{
         errorTitle: false,
         errorContent: false
-      }
+      },
+      commentError: false,
+      openTodo: false,
+      openComment: false,
     };
 
     this.addTodo = this.addTodo.bind(this);
@@ -38,6 +48,14 @@ export class App extends React.Component{
     this.editTodo = this.editTodo.bind(this);
 
     this.changeEdit = this.changeEdit.bind(this);
+
+    this.addComment = this.addComment.bind(this);
+
+    this.changeComment = this.changeComment.bind(this);
+
+    this.deleteComment = this.deleteComment.bind(this);
+
+    this.handleTodo = this.handleTodo.bind(this);
   }
 
   /**
@@ -80,10 +98,13 @@ export class App extends React.Component{
         id: Number(countNum) + 1,
         title: title,
         content: content,
+        notYet: true,
+        doing: false,
         review: false,
         done: false,
         edit: false,
-        notYet: true,
+        commemt: [],
+        commentForm: false
       })
       // 更新
       this.setState({
@@ -91,7 +112,8 @@ export class App extends React.Component{
         error: {
           errorTitle: false,
           errorContent: false,
-        }
+        },
+        openTodo: false,
       })
     }
     // フォームのリセット
@@ -125,6 +147,7 @@ export class App extends React.Component{
     const result = data.findIndex(({id}) => id === Number(number));
     data[result].review = true;
     data[result].doing = false;
+    data[result].comment = [];
     this.setState({
       data: data
     })
@@ -176,7 +199,7 @@ export class App extends React.Component{
     const data = this.state.data.slice();
     // 変更するタスクのidを検索
     const result = data.findIndex(({id}) => id === Number(number));
-    data[result].edit = true;
+    data[result].edit = !data[result].edit;
     this.setState({
       data: data
     })
@@ -260,216 +283,135 @@ export class App extends React.Component{
     
   }
 
+  /**
+   * コメント追加
+   * @param number //タスクid
+   * @param event //入力値
+   */
+  addComment(event, number){
+    event.preventDefault();
+    const data = this.state.data.slice();
+    
+
+    const commentValue = event.target.comment.value;
+    if (commentValue === "") {
+      this.setState({
+        commentError: true,
+      })
+    } else {
+      const result = data.findIndex(({id}) => id === Number(number));
+
+      data[result].comment.push({
+        text: String(commentValue),
+      })
+      data[result].commentForm = false;
+
+      this.setState({
+        data: data,
+        commentError: false,
+      })
+    }
+    event.target.comment.value = "";
+  }
+
+  /**
+   * コメントフォーム変更
+   * @param number //タスクid
+   */
+  changeComment(number){
+    const data = this.state.data.slice();
+    const result = data.findIndex(({id}) => id === Number(number));
+    data[result].commentForm = !data[result].commentForm;
+    this.setState({
+      data: data
+    })
+  }
+
+
+  /**
+   * コメント削除
+   * @param number // タスクid
+   * @param i // コメントのkey
+   */
+  deleteComment(number, i){
+    const data = this.state.data.slice();
+    const result = data.findIndex(({id}) => id === Number(number));
+    data[result].comment.splice(i, 1);
+    this.setState({
+      data: data
+    })
+  }
+
+  handleTodo(){
+    this.setState({
+      openTodo: !this.state.openTodo,
+    })
+  }
+
   render(){
+    const data = this.state.data;
     const error = this.state.error;
     const editError = this.state.editError;
+    const commentError = this.state.commentError;
+
+    const openTodo = this.state.openTodo;
+
     return(
       <>
-        <header>todo</header>
-
+        <Header 
+          resetTodo={this.resetTodo}
+          handleTodo={this.handleTodo}
+        />
         <main>
-          {/* リセットボタン */}
-          <div className="">
-            <button onClick={() => this.resetTodo()}>リセットする</button>
-          </div>
+          <Form 
+            openTodo={openTodo}
+            addTodo={this.addTodo}
+            error={error}
+            handleTodo={this.handleTodo}
+          />
 
-          {/* フォーム */}
-          <form className="form" onSubmit={this.addTodo} >
-            <div className="">
-              <input className="" type="text" name="title" placeholder="enter title"/>
-              { error.errorTitle === true &&
-                // エラー
-                <div className="">
-                  タイトルを入力してください
-                </div>
-              }
-            </div>
-            
-            <div className="">
-              <textarea className="" name="content" id="" cols="30" rows="4" placeholder="enter text"></textarea>
-              {error.errorContent === true &&
-                // エラー
-                <div className="">
-                  テキストを入力してください
-                </div>
-              }
-            </div>
+          <TodoList 
+            data={data}
+            editTodo={this.editTodo}
+            editTitle={this.editTitle}
+            editContent={this.editContent}
+            editError={editError}
+            changeDoing={this.changeDoing}
+            changeEdit={this.changeEdit}
+          />
 
-            <div className="">
-              <button className="" type="submit">add todo</button>
-            </div>
-          </form>
-
-
-          {/* リスト表示 */}
-          <h1>Todo List</h1>
-          <div className="">
-            {this.state.data.map((todo, i) => {
-              let number = todo.id
-              return(
-                <>
-                  { todo.edit === true ?
-                    <form className="edit" onSubmit={(event) => this.editTodo(event, number)}>
-                      <div className="">
-                        <input className="" type="text" name="title" placeholder="enter title" 
-                          value={todo.title} onChange={(event) => this.editTitle(event, number)}/>
-                        { editError.errorTitle === true &&
-                          // エラー
-                          <div className="">
-                            タイトルを入力してください
-                          </div>
-                        }
-                      </div>
-                      
-                      <div className="">
-                        <textarea className="" name="content" id="" cols="30" rows="4" placeholder="enter text"
-                          onChange={(event) => this.editContent(event, number)}>{todo.content}</textarea>
-                        {editError.errorContent === true &&
-                          // エラー
-                          <div className="">
-                            テキストを入力してください
-                          </div>
-                        }
-                      </div>
-          
-                      <div className="">
-                        <button className="" type="submit">変更する</button>
-                      </div>
-                    </form>
-                  :
-                  <>
-                    {todo.notYet === true &&
-                      <div className="" key={i}>
-                        <div className="">
-                          {todo.id}
-                        </div>
-                        <div className="">
-                          {todo.title}
-                        </div>
-                        <div className="">
-                          {todo.content}
-                        </div>
-                        <button onClick={() => this.changeDoing(number)}>
-                          実行中へ
-                        </button>
-                        <button onClick={() => this.changeEdit(number)}>
-                          編集する
-                        </button>
-                        <br/>
-                      </div>
-                    }
-                  </>
-                  }
-                  
-                </>
-              )
-            })}
-          </div>
-          
           <br/><br/><br/><br/>
 
-          {/* リスト表示 */}
-          <h1>Doing List</h1>
-          <div className="">
-            {this.state.data.map((todo, i) => {
-              let number = todo.id
-              return(
-                <>
-                {todo.doing === true &&
-                <div className="" key={i}>
-                  <div className="">
-                    {todo.id}
-                  </div>
-                  <div className="">
-                    {todo.title}
-                  </div>
-                  <div className="">
-                    {todo.content}
-                  </div>
-                  <button onClick={() => this.changeReview(number)}>
-                    確認待ちへ
-                  </button>
-                  <button>
-                    編集する
-                  </button>
-                  <br/>
-                </div>
-                }
-                </>
-              )
-            })}
-          </div>
-          
+          <Doing 
+            data={data}
+            editTodo={this.editTodo}
+            editTitle={this.editTitle}
+            editContent={this.editContent}
+            editError={editError}
+            changeReview={this.changeReview}
+            changeEdit={this.changeEdit}
+          />
+
           <br/><br/><br/><br/>
 
           {/* 確認まちタスク */}
-          <h1>Review List</h1>
-          <div className="">
-            {this.state.data.map((todo, i) => {
-              let number = todo.id;
-              return(
-                <>
-                {todo.review === true &&
-                  
-                  <div className="" key={i}>
-                    <div className="">
-                      {todo.id}
-                    </div>
-                    <div className="">
-                      {todo.title}
-                    </div>
-                    <div className="">
-                      {todo.content}
-                    </div>
-                    <button onClick={() => this.changeDone(number)}>
-                      完了する
-                    </button>
-                    <button>
-                      編集する
-                    </button>
-                    <br/>
-                  </div>
-                }
-                </>
-              )
-            })}
-          </div>
-
+          <Review 
+            data={data}
+            deleteComment={this.deleteComment}
+            changeDone={this.changeDone}
+            addComment={this.addComment}
+            changeComment={this.changeComment}
+            commentError={commentError}
+          />
+          
           <br/><br/><br/><br/>
           
           {/* 完了タスク */}
-          <h1>Done List</h1>
-          <div className="">
-            {this.state.data.map((todo, i) => {
-              let number = todo.id 
-              return(
-                <>
-                {todo.done === true &&
-                  <div className="" key={i}>
-                    <div className="">
-                      {todo.id}
-                    </div>
-                    <div className="">
-                      {todo.title}
-                    </div>
-                    <div className="">
-                      {todo.content}
-                    </div>
-                    <button onClick={() => this.deleteTodo(number) }>
-                      削除する
-                    </button>
-                    <br/>
-                  </div>
-                }
-                </>
-              )
-            })}
-          </div>
-
-
-
+          <Done 
+            data={data}
+            deleteTodo={this.deleteTodo}
+          />
         </main>
-        <footer></footer>
       </>
     )
   }

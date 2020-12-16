@@ -1,5 +1,6 @@
 import React from "react";
 import {EditForm} from "../form/edit-form";
+import {IndividualTodo} from "./individual-todo";
 
 export const TodoList = (props) => {
   return(
@@ -9,7 +10,7 @@ export const TodoList = (props) => {
         let number = todo.id
         return(
           <>
-            { todo.edit === true ?
+            { todo.edit === true && todo.notYet === true?
             <>
               <EditForm 
                 editTodo={props.editTodo}
@@ -26,15 +27,9 @@ export const TodoList = (props) => {
             <>
               {todo.notYet === true &&
                 <div className="" key={i}>
-                  <div className="">
-                    {todo.id}
-                  </div>
-                  <div className="">
-                    {todo.title}
-                  </div>
-                  <div className="">
-                    {todo.content}
-                  </div>
+                  <IndividualTodo 
+                    todo={todo}
+                  />
                   <button onClick={() => props.changeDoing(number)}>
                     実行中へ
                   </button>

@@ -1,4 +1,5 @@
 import React from "react";
+import {IndividualTodo} from "./individual-todo";
 
 export const Done = (props) => {
   return(
@@ -10,15 +11,9 @@ export const Done = (props) => {
           <>
           {todo.done === true &&
             <div className="" key={i}>
-              <div className="">
-                {todo.id}
-              </div>
-              <div className="">
-                {todo.title}
-              </div>
-              <div className="">
-                {todo.content}
-              </div>
+              <IndividualTodo 
+                todo={todo}
+              />
               <button onClick={() => props.deleteTodo(number) }>
                 削除する
               </button>

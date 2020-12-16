@@ -1,4 +1,5 @@
 import React from "react";
+import {IndividualTodo} from "./individual-todo";
 
 export const Review = (props) => {
   return(
@@ -12,16 +13,9 @@ export const Review = (props) => {
           {todo.review === true &&
             
             <div className="" key={i}>
-              <div className="">
-                {todo.id}
-              </div>
-              <div className="">
-                {todo.title}
-              </div>
-              <div className="">
-                {todo.content}
-              </div>
-              
+              <IndividualTodo 
+                todo={todo}
+              />
               <br/>
               {/* コメント内容 */}
               {commentArray.length > 0 &&

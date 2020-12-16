@@ -126,14 +126,17 @@ export class App extends React.Component{
    * @param number //タスクのid 
    */
   changeDoing(number){
-    const data = this.state.data.slice();
-    // 実行中に移動させるタスクのidを連想配列から検索
-    const result = data.findIndex(({id}) => id === Number(number));
-    data[result].doing = true;
-    data[result].notYet = false;
-    this.setState({
-      data: data
-    })
+    const bool = window.confirm("タスクを実行しますか？");
+    if (bool === true) {
+      const data = this.state.data.slice();
+      // 実行中に移動させるタスクのidを連想配列から検索
+      const result = data.findIndex(({id}) => id === Number(number));
+      data[result].doing = true;
+      data[result].notYet = false;
+      this.setState({
+        data: data
+      })
+    }
 
   }
 
@@ -142,15 +145,18 @@ export class App extends React.Component{
    * @param number //タスクのid 
    */
   changeReview(number){
-    const data = this.state.data.slice();
-    // 確認待ちにしたいタスクのidを連想配列から検索
-    const result = data.findIndex(({id}) => id === Number(number));
-    data[result].review = true;
-    data[result].doing = false;
-    data[result].comment = [];
-    this.setState({
-      data: data
-    })
+    const bool = window.confirm("タスクを確認リストへ移動しますか？");
+    if (bool === true) {
+      const data = this.state.data.slice();
+      // 確認待ちにしたいタスクのidを連想配列から検索
+      const result = data.findIndex(({id}) => id === Number(number));
+      data[result].review = true;
+      data[result].doing = false;
+      data[result].comment = [];
+      this.setState({
+        data: data
+      })
+    }
   }
 
   /**
@@ -158,14 +164,17 @@ export class App extends React.Component{
    * @param number //タスクのidを取得
    */
   changeDone(number){
-    const data = this.state.data.slice();
-    // 完了したいタスクのidを連想配列から検索
-    const result = data.findIndex(({id}) => id === Number(number));
-    data[result].done = true;
-    data[result].review = false;
-    this.setState({
-      data: data,
-    })
+    const bool = window.confirm("タスクを完了しますか？");
+    if (bool === true) {
+      const data = this.state.data.slice();
+      // 完了したいタスクのidを連想配列から検索
+      const result = data.findIndex(({id}) => id === Number(number));
+      data[result].done = true;
+      data[result].review = false;
+      this.setState({
+        data: data,
+      })
+    }
   }
 
   /**
@@ -173,23 +182,29 @@ export class App extends React.Component{
    * @param number  // タスクのid
    */
   deleteTodo(number){
-    const data = this.state.data.slice();
-    // 削除したいタスクのidを連想配列から検索
-    const result = data.findIndex(({id}) => id === Number(number));
-    // 配列のresult番目を1つ切り取る
-    data.splice(result, 1);
-    this.setState({
-      data: data
-    })
+    const bool = window.confirm("タスクを削除しますか？");
+    if (bool === true) {
+      const data = this.state.data.slice();
+      // 削除したいタスクのidを連想配列から検索
+      const result = data.findIndex(({id}) => id === Number(number));
+      // 配列のresult番目を1つ切り取る
+      data.splice(result, 1);
+      this.setState({
+        data: data
+      })
+    }
   }
 
   // リセット
   resetTodo(){
     const data = this.state.data.slice();
-    data.length = 0;
-    this.setState({
-      data: data
-    })
+    const bool = window.confirm("本当にリセットしますか？");
+    if (bool === true) {
+      data.length = 0;
+      this.setState({
+        data: data
+      })
+    }
   }
 
   /** 変更フォームに切り替える

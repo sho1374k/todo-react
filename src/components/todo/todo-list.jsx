@@ -10,7 +10,7 @@ export const TodoList = (props) => {
       {props.data.map((todo, i) => {
         let number = todo.id
         return(
-          <div className="todo-content">
+          <div className="todo-content" key={i}>
             { todo.edit === true && todo.notYet === true?
               <EditForm 
                 editTodo={props.editTodo}
@@ -33,8 +33,8 @@ export const TodoList = (props) => {
                   
                 </div>
                 <div className="todo-content-btns">
-                  <Btn  name={"実行中へ"} style={"btn btn-doing"} actionClick={props.changeDoing} value={number} i={String} />
-                  <Btn  name={"編集する"} style={"btn btn-edit"} actionClick={props.changeEdit} value={number} i={String} />
+                  <Btn  name={"実行中へ"} styleName={"btn btn-doing"} actionClick={props.changeDoing} value={number} i={String} />
+                  <Btn  name={"編集する"} styleName={"btn btn-edit"} actionClick={props.changeEdit} value={number} i={String} />
                   <br/><br/>
                 </div>
               </>

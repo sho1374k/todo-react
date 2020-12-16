@@ -10,7 +10,7 @@ export const Doing = (props) => {
       {props.data.map((todo, i) => {
         let number = todo.id
         return(
-          <div className="doing-content">
+          <div className="doing-content" key={i}>
           { todo.edit === true && todo.doing === true ?
             <EditForm 
               editTodo={props.editTodo}
@@ -32,8 +32,8 @@ export const Doing = (props) => {
                 />
               </div>
               <div className="doing-content-btns">
-                <Btn  name={"確認待ちへ"} style={"btn btn-review"} actionClick={props.changeReview} value={number} i={String} />
-                <Btn  name={"編集する"} style={"btn btn-edit-todo"} actionClick={props.changeEdit} value={number} i={String} />
+                <Btn  name={"確認待ちへ"} styleName={"btn btn-review"} actionClick={props.changeReview} value={number} i={String} />
+                <Btn  name={"編集する"} styleName={"btn btn-edit-todo"} actionClick={props.changeEdit} value={number} i={String} />
                 <br/><br/>
               </div>
             </>

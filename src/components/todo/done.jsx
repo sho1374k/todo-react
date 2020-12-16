@@ -9,7 +9,7 @@ export const Done = (props) => {
       {props.data.map((todo, i) => {
         let number = todo.id 
         return(
-          <div className="done-content">
+          <div className="done-content" key={i}>
           {todo.done === true &&
           <>
             <div className="done-content-des" key={i}>
@@ -18,7 +18,7 @@ export const Done = (props) => {
               />
             </div>
             <div className="done-content-btns">
-              <Btn  name={"削除する"} style={"btn btn-todo-delete"} actionClick={props.deleteTodo} value={number} i={String} />
+              <Btn  name={"削除する"} styleName={"btn btn-todo-delete"} actionClick={props.deleteTodo} value={number} i={String} />
               <br/>
             </div>
           </>

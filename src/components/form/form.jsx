@@ -28,7 +28,7 @@ export const Form = (props) => {
 
       <div className="form-btns">
         <button className="btn btn-add-todo" className="" type="submit">add todo</button>
-        <Btn  name={"閉じる"} style={"btn btn-close-form"} actionClick={props.handleTodo} value={String} i={String} />
+        <Btn  name={"閉じる"} styleName={"btn btn-close-form"} actionClick={props.handleTodo} value={String} i={String} />
       </div>
     </form>
     }

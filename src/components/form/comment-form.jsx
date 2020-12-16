@@ -15,7 +15,7 @@ export const CommentForm = (props) => {
 
       <div className="commentForm-btns">
         <button className="brn btn-add-comment" type="submit" >コメントを追加する</button>
-        <Btn name={"閉じる"} style={"btn btn-close-comenntForm"} actionClick={props.changeComment} value={props.number} i={String} />
+        <Btn name={"閉じる"} styleName={"btn btn-close-comenntForm"} actionClick={props.changeComment} value={props.number} i={String} />
       </div>
     </form>
   )

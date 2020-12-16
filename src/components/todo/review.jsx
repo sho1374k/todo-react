@@ -11,9 +11,9 @@ export const Review = (props) => {
         let number = todo.id;
         let commentArray = todo.comment;
         return(
-          <div className="review-content">
+          <div className="review-content" key={i}>
           {todo.review === true &&
-            <div className="review-content-des" key={i}>
+            <div className="review-content-des">
               <IndividualTodo 
                 todo={todo}
               />
@@ -27,14 +27,12 @@ export const Review = (props) => {
                           {comment.text}
                         </div>
                         <div className="comment-box-btn">
-                          <Btn  name={"コメント削除"} style={"btn btn-comment-delete"} actionClick={props.deleteComment} value={number} i={i} />
+                          <Btn  name={"コメント削除"} styleName={"btn btn-comment-delete"} actionClick={props.deleteComment} value={number} i={i} />
                         </div>
                       </div>
                     )
                   })
                 }
-                {console.log(todo.commentForm)}
-
                 {todo.commentForm === true ?
                   <>
                     <CommentForm 
@@ -46,8 +44,8 @@ export const Review = (props) => {
                   </>
                 :
                   <div className="comment-btns">
-                    <Btn  name={"完了する"} style={"btn btn-complate"} actionClick={props.changeDone} value={number} i={i} />
-                    <Btn  name={"コメントする"} style={"btn btn-comment-create"} actionClick={props.changeComment} value={number} i={i} />
+                    <Btn  name={"完了する"} styleName={"btn btn-complate"} actionClick={props.changeDone} value={number} i={i} />
+                    <Btn  name={"コメントする"} styleName={"btn btn-comment-create"} actionClick={props.changeComment} value={number} i={i} />
                   </div>
                   
                 }

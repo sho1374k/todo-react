@@ -26,6 +26,240 @@ export class App extends React.Component{
       }
     };
 
+    this.addTodo = this.addTodo.bind(this);
+    this.deleteTodo = this.deleteTodo.bind(this);
+    this.changeDone = this.changeDone.bind(this);
+    this.changeReview = this.changeReview.bind(this);
+    this.resetTodo = this.resetTodo.bind(this);
+    this.changeDoing = this.changeDoing.bind(this);
+
+    this.editTitle = this.editTitle.bind(this);
+    this.editContent = this.editContent.bind(this);
+    this.editTodo = this.editTodo.bind(this);
+
+    this.changeEdit = this.changeEdit.bind(this);
+  }
+
+  /**
+   * タスク追加
+   * @param event //inputの値 
+   */
+  addTodo(event){
+    // イベント取り消し
+    event.preventDefault();
+    const data = this.state.data.slice();
+    const countNum = data.length;
+    const title = event.target.title.value;
+    const content =  event.target.content.value;
+
+    // バリデ
+    if (title === "" && content === "") {
+      this.setState({
+        error: {
+          errorTitle: true,
+          errorContent: true,
+        }
+      })
+    } else if (title === "") {
+      this.setState({
+        error: {
+          errorTitle: true,
+          errorContent: false,
+        }
+      })
+    } else if (content === "") {
+      this.setState({
+        error: {
+          errorTitle: false,
+          errorContent: true,
+        }
+      })
+    } else {
+      // バリデ突破！
+      data.push({
+        id: Number(countNum) + 1,
+        title: title,
+        content: content,
+        review: false,
+        done: false,
+        edit: false,
+        notYet: true,
+      })
+      // 更新
+      this.setState({
+        data: data,
+        error: {
+          errorTitle: false,
+          errorContent: false,
+        }
+      })
+    }
+    // フォームのリセット
+    event.target.title.value = "";
+    event.target.content.value = "";
+  }
+
+  /**
+   * 実行中に移動させる
+   * @param number //タスクのid 
+   */
+  changeDoing(number){
+    const data = this.state.data.slice();
+    // 実行中に移動させるタスクのidを連想配列から検索
+    const result = data.findIndex(({id}) => id === Number(number));
+    data[result].doing = true;
+    data[result].notYet = false;
+    this.setState({
+      data: data
+    })
+
+  }
+
+  /**
+   * 確認待ちへ移動させる
+   * @param number //タスクのid 
+   */
+  changeReview(number){
+    const data = this.state.data.slice();
+    // 確認待ちにしたいタスクのidを連想配列から検索
+    const result = data.findIndex(({id}) => id === Number(number));
+    data[result].review = true;
+    data[result].doing = false;
+    this.setState({
+      data: data
+    })
+  }
+
+  /**
+   * 完了に移動させる
+   * @param number //タスクのidを取得
+   */
+  changeDone(number){
+    const data = this.state.data.slice();
+    // 完了したいタスクのidを連想配列から検索
+    const result = data.findIndex(({id}) => id === Number(number));
+    data[result].done = true;
+    data[result].review = false;
+    this.setState({
+      data: data,
+    })
+  }
+
+  /**
+   * タスクを削除する
+   * @param number  // タスクのid
+   */
+  deleteTodo(number){
+    const data = this.state.data.slice();
+    // 削除したいタスクのidを連想配列から検索
+    const result = data.findIndex(({id}) => id === Number(number));
+    // 配列のresult番目を1つ切り取る
+    data.splice(result, 1);
+    this.setState({
+      data: data
+    })
+  }
+
+  // リセット
+  resetTodo(){
+    const data = this.state.data.slice();
+    data.length = 0;
+    this.setState({
+      data: data
+    })
+  }
+
+  /** 変更フォームに切り替える
+   * @param number //タスクid
+   */
+  changeEdit(number){
+    const data = this.state.data.slice();
+    // 変更するタスクのidを検索
+    const result = data.findIndex(({id}) => id === Number(number));
+    data[result].edit = true;
+    this.setState({
+      data: data
+    })
+  }
+
+  /**
+   * 編集
+   * @param event // 入力されている値
+   * @param number // タスクid
+   */
+  editTitle(event, number){
+    const data = this.state.data.slice();
+    // 引数でid検索
+    const result = data.findIndex(({id}) => id === Number(number));
+    const title = event.target.value;
+    data[result].title = title;
+    this.setState({
+      data: data
+    })
+  }
+  editContent(event, number){
+    const data = this.state.data.slice();
+    //引数でid検索
+    const result = data.findIndex(({id}) => id === Number(number));
+    const content = event.target.value;
+    data[result].content = content;
+    this.setState({
+      data: data
+    })
+  }
+
+  /**
+   * 変更更新
+   * @param event 
+   * @param number 
+   */
+  editTodo(event, number){
+    const data = this.state.data.slice();
+    // イベント取り消し
+    event.preventDefault();
+    const title = event.target.title.value;
+    const content = event.target.content.value;
+    if (title === "" && content === "") {
+      event.target.title.value = "";
+      event.target.content.value = "";
+      this.setState({
+        editError: {
+          errorTitle: true,
+          errorContent: true,
+        }
+      })
+    } else if (title === "") {
+      event.target.title.value = "";
+      this.setState({
+        editError: {
+          errorTitle: true,
+          errorContent: false,
+        }
+      })
+    } else if (content === "") {
+      event.target.content.value = "";
+      this.setState({
+        editError: {
+          errorTitle: false,
+          errorContent: true,
+        }
+      })
+    } else {
+      const result = data.findIndex(({id}) => id === Number(number));
+      data[result].title = title;
+      data[result].contetn = content;
+      data[result].edit = false;
+      this.setState({
+        data: data,
+        editError: {
+          errorTitle: false,
+          errorContet: false
+        }
+      })
+    }
+    
+  }
+
   render(){
     const error = this.state.error;
     const editError = this.state.editError;
@@ -240,5 +474,3 @@ export class App extends React.Component{
     )
   }
 }
-
-

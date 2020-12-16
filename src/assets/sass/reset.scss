@@ -1,0 +1,95 @@
+/* reset.css */
+/* HTML の設定を削除 */
+html{
+  color: dimgray;
+  background: #EEF0F4;
+  font-family: 'M PLUS 1p', sans-serif;
+}
+/* body の設定を削除 */
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,
+/* p, */
+blockquote,th,td {
+  margin:0;
+  padding:0;
+  white-space: pre-line;
+}
+table {
+  border-collapse:collapse;
+  border-spacing:0;
+}
+fieldset,img {
+  border:0;
+}
+address,caption,cite,code,dfn,em,strong,th,var {
+  font-style:normal;
+  font-weight:normal;
+}
+ol,ul {
+  list-style:none;
+}
+caption,th {
+  text-align:left;
+}
+abbr,acronym {
+  border:0;
+  font-variant:normal;
+}
+/* 行の高さとセレスターの外観を維持する */
+sup {
+  vertical-align:text-top;
+}
+sub {
+  vertical-align:text-bottom;
+}
+input,textarea,select {
+  font-family:inherit;
+  font-size:inherit;
+  font-weight:inherit;
+}
+/* IE のサイズ変更を有効にする */
+input,textarea,select {
+  *font-size:100%;
+}
+/* legend は IE で継承しない */
+legend {
+  color:#000;
+}
+/* YUI CSS検出スタンプ */
+#yui3-css-stamp.cssreset { display: none; }
+input[type="submit"] {
+  -webkit-appearance: none;
+  border-radius: 0;
+}
+/* ボタンの青枠削除 */
+*:focus {
+  outline: none;
+}
+/*スクロールバー*/
+::-webkit-scrollbar {
+  display: none;
+}
+/* スマホクリック時青光削除 */
+a {
+  -webkit-tap-highlight-color:rgba(0,0,0,0);
+  cursor:pointer;
+}
+a{
+  box-shadow: none;
+}
+input[type="text"],
+input[type="email"],
+input[type="submit"] {
+  -webkit-appearance: none; 
+  background-color: #EEF0F4;
+}
+textarea{
+  -webkit-appearance: none;
+  appearance: none;
+}
+a {
+  -webkit-tap-highlight-color:rgba(0,0,0,0);
+  cursor:pointer;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@300&display=swap');
+// font-family: 'Rajdhani', sans-serif;

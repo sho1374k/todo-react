@@ -1,4 +1,5 @@
 import React from "react";
+import {EditForm} from "../form/edit-form";
 
 export const TodoList = (props) => {
   return(
@@ -9,33 +10,18 @@ export const TodoList = (props) => {
         return(
           <>
             { todo.edit === true ?
-              <form className="edit" onSubmit={(event) => props.editTodo(event, number)}>
-                <div className="">
-                  <input className="" type="text" name="title" placeholder="enter title" 
-                    value={todo.title} onChange={(event) => props.editTitle(event, number)}/>
-                  { props.editError.errorTitle === true &&
-                    // エラー
-                    <div className="">
-                      タイトルを入力してください
-                    </div>
-                  }
-                </div>
-                
-                <div className="">
-                  <textarea className="" name="content" id="" cols="30" rows="4" placeholder="enter text"
-                    onChange={(event) => props.editContent(event, number)}>{todo.content}</textarea>
-                  {props.editError.errorContent === true &&
-                    // エラー
-                    <div className="">
-                      テキストを入力してください
-                    </div>
-                  }
-                </div>
-    
-                <div className="">
-                  <button className="" type="submit">変更する</button>
-                </div>
-              </form>
+            <>
+              <EditForm 
+                editTodo={props.editTodo}
+                editTitle={props.editTitle}
+                editContent={props.editContent}
+                editError={props.editError}
+                changeEdit={props.changeEdit}
+                number={number}
+                todo={todo}
+                i={i}
+              />
+            </>
             :
             <>
               {todo.notYet === true &&

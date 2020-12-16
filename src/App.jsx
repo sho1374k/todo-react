@@ -104,6 +104,7 @@ export class App extends React.Component{
         done: false,
         edit: false,
         commemt: [],
+        commentForm: false
       })
       // 更新
       this.setState({
@@ -145,6 +146,7 @@ export class App extends React.Component{
     const result = data.findIndex(({id}) => id === Number(number));
     data[result].review = true;
     data[result].doing = false;
+    data[result].comment = [];
     this.setState({
       data: data
     })
@@ -196,7 +198,7 @@ export class App extends React.Component{
     const data = this.state.data.slice();
     // 変更するタスクのidを検索
     const result = data.findIndex(({id}) => id === Number(number));
-    data[result].edit = true;
+    data[result].edit = !data[result].edit;
     this.setState({
       data: data
     })
@@ -356,40 +358,27 @@ export class App extends React.Component{
 
     return(
       <>
-        <Header />
-        {/* リセットボタン */}
-          <div className="">
-            <button onClick={() => this.resetTodo()}>リセットする</button>
-          </div>
-          <button onClick={() => this.handleTodo()}>+</button>
-
+        <Header 
+          resetTodo={this.resetTodo}
+          handleTodo={this.handleTodo}
+        />
         <main>
-          
-          
+          <Form 
+            openTodo={openTodo}
+            addTodo={this.addTodo}
+            error={error}
+            handleTodo={this.handleTodo}
+          />
 
-          { openTodo === true &&
-            <Form 
-              addTodo={this.addTodo}
-              error={error}
-              handleTodo={this.handleTodo}
-            />
-          }
-          
-
-
-          {/* リスト表示 */}
           <TodoList 
             data={data}
             editTodo={this.editTodo}
             editTitle={this.editTitle}
             editContent={this.editContent}
             editError={editError}
-
             changeDoing={this.changeDoing}
             changeEdit={this.changeEdit}
           />
-
-  
 
           <br/><br/><br/><br/>
 
@@ -399,117 +388,29 @@ export class App extends React.Component{
             editTitle={this.editTitle}
             editContent={this.editContent}
             editError={editError}
-
             changeReview={this.changeReview}
             changeEdit={this.changeEdit}
           />
-          
-          
+
           <br/><br/><br/><br/>
 
           {/* 確認まちタスク */}
-          <Review />
-          <h1>Review List</h1>
-          <div className="">
-            {data.map((todo, i) => {
-              let number = todo.id;
-              let commentArray = todo.comment.slice();
-              return(
-                <>
-                {todo.review === true &&
-                  
-                  <div className="" key={i}>
-                    <div className="">
-                      {todo.id}
-                    </div>
-                    <div className="">
-                      {todo.title}
-                    </div>
-                    <div className="">
-                      {todo.content}
-                    </div>
-                    
-                    <br/>
-                    {/* コメント内容 */}
-                    {!(commentArray.length === 0) &&
-                      commentArray.map((comment, i) => {
-                        return(
-                          <div className="" key={i}>
-                            {comment.text}
-                            <br/>
-                            <button onClick={() => this.deleteComment(number, i)}>コメント削除</button>
-                          </div>
-
-                        )
-                      })
-                    }
-                   
-                    <button onClick={() => this.changeDone(number)}>
-                      完了する
-                    </button>
-                    <br/>
-                    {todo.commentForm === true ?
-                    <>
-                    <form onSubmit={(event) => this.addComment(event, number)}>
-                      <input type="text" name="comment"/>
-                      {commentError === true &&
-                        <div className="">
-                          コメントを入力してください
-                        </div>
-                      }
-                      <button type="submit" >コメントを追加する</button>
-                      <button onClick={() => this.changeComment(number)}>閉じる</button>
-                    </form>
-                    
-                    </>
-                    :
-                    <button onClick={() => this.changeComment(number)}> 
-                      コメントする
-                    </button>
-                    }
-                    <br/><br/>
-                  </div>
-                  
-                }
-                </>
-              )
-            })}
-          </div>
-
+          <Review 
+            data={data}
+            deleteComment={this.deleteComment}
+            changeDone={this.changeDone}
+            addComment={this.addComment}
+            changeComment={this.changeComment}
+            commentError={commentError}
+          />
+          
           <br/><br/><br/><br/>
           
           {/* 完了タスク */}
-          <Done />
-          <h1>Done List</h1>
-          <div className="">
-            {this.state.data.map((todo, i) => {
-              let number = todo.id 
-              return(
-                <>
-                {todo.done === true &&
-                  <div className="" key={i}>
-                    <div className="">
-                      {todo.id}
-                    </div>
-                    <div className="">
-                      {todo.title}
-                    </div>
-                    <div className="">
-                      {todo.content}
-                    </div>
-                    <button onClick={() => this.deleteTodo(number) }>
-                      削除する
-                    </button>
-                    <br/>
-                  </div>
-                }
-                </>
-              )
-            })}
-          </div>
-
-
-
+          <Done 
+            data={data}
+            deleteTodo={this.deleteTodo}
+          />
         </main>
       </>
     )

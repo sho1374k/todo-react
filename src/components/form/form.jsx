@@ -2,6 +2,8 @@ import React from "react";
 
 export const Form = (props) => {
   return(
+    <>
+    { props.openTodo === true &&
     <form className="form" onSubmit={props.addTodo} >
       <div className="">
         <input className="" type="text" name="title" placeholder="enter title"/>
@@ -29,5 +31,7 @@ export const Form = (props) => {
 
       <button onClick={() => props.handleTodo()}>閉じる</button>
     </form>
+    }
+    </>
   )
 }

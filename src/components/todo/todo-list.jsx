@@ -30,10 +30,10 @@ export const TodoList = (props) => {
                   <IndividualTodo 
                     todo={todo}
                   />
-                  <button onClick={() => props.changeDoing(number)}>
+                  <button className="" onClick={() => props.changeDoing(number)}>
                     実行中へ
                   </button>
-                  <button onClick={() => props.changeEdit(number)}>
+                  <button className="" onClick={() => props.changeEdit(number)}>
                     編集する
                   </button>
                   <br/>

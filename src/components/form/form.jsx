@@ -26,10 +26,10 @@ export const Form = (props) => {
       </div>
 
       <div className="">
-        <button className="" type="submit">add todo</button>
+        <button className="" className="" type="submit">add todo</button>
       </div>
 
-      <button onClick={() => props.handleTodo()}>閉じる</button>
+      <button className="" onClick={() => props.handleTodo()}>閉じる</button>
     </form>
     }
     </>

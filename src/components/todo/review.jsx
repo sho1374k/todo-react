@@ -1,5 +1,6 @@
 import React from "react";
 import {IndividualTodo} from "./individual-todo";
+import {CommentForm} from "../form/comment-form";
 
 export const Review = (props) => {
   return(
@@ -11,7 +12,6 @@ export const Review = (props) => {
         return(
           <>
           {todo.review === true &&
-            
             <div className="" key={i}>
               <IndividualTodo 
                 todo={todo}
@@ -24,33 +24,27 @@ export const Review = (props) => {
                     <div className="" key={i}>
                       {comment.text}
                       <br/>
-                      <button onClick={() => props.deleteComment(number, i)}>コメント削除</button>
+                      <button className="" onClick={() => props.deleteComment(number, i)}>コメント削除</button>
                     </div>
-
                   )
                 })
               }
               
-              <button onClick={() => props.changeDone(number)}>
+              <button className="" onClick={() => props.changeDone(number)}>
                 完了する
               </button>
               <br/>
               {todo.commentForm === true ?
               <>
-              <form onSubmit={(event) => props.addComment(event, number)}>
-                <input type="text" name="comment"/>
-                {props.commentError === true &&
-                  <div className="">
-                    コメントを入力してください
-                  </div>
-                }
-                <button type="submit" >コメントを追加する</button>
-                <button onClick={() => props.changeComment(number)}>閉じる</button>
-              </form>
-              
+              <CommentForm 
+                addComment ={props.addComment}
+                commentError={props.commentError}
+                changeComment={props.changeComment}
+                number={number}
+              />
               </>
               :
-              <button onClick={() => props.changeComment(number)}> 
+              <button className="" onClick={() => props.changeComment(number)}> 
                 コメントする
               </button>
               }
@@ -62,5 +56,5 @@ export const Review = (props) => {
         )
       })}
     </div>
-)
+  )
 }

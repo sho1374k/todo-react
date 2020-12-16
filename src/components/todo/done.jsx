@@ -14,7 +14,7 @@ export const Done = (props) => {
               <IndividualTodo 
                 todo={todo}
               />
-              <button onClick={() => props.deleteTodo(number) }>
+              <button className="" onClick={() => props.deleteTodo(number) }>
                 削除する
               </button>
               <br/>

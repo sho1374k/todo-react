@@ -112,7 +112,8 @@ export class App extends React.Component{
         error: {
           errorTitle: false,
           errorContent: false,
-        }
+        },
+        openTodo: false,
       })
     }
     // フォームのリセット
@@ -320,7 +321,6 @@ export class App extends React.Component{
   changeComment(number){
     const data = this.state.data.slice();
     const result = data.findIndex(({id}) => id === Number(number));
-    // data[result].commentForm = true;
     data[result].commentForm = !data[result].commentForm;
     this.setState({
       data: data

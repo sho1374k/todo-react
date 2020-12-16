@@ -25,6 +25,7 @@ export class App extends React.Component{
         errorContent: false
       }
     };
+
     this.addTodo = this.addTodo.bind(this);
     this.deleteTodo = this.deleteTodo.bind(this);
     this.changeDone = this.changeDone.bind(this);

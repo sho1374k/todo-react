@@ -11,7 +11,6 @@ body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input
 blockquote,th,td {
   margin:0;
   padding:0;
-  white-space: pre-line;
 }
 table {
   border-collapse:collapse;
@@ -90,6 +89,9 @@ a {
   -webkit-tap-highlight-color:rgba(0,0,0,0);
   cursor:pointer;
 }
+
+// white-space: pre-line;
+
 
 @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@300&display=swap');
 // font-family: 'Rajdhani', sans-serif;

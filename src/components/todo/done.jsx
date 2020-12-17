@@ -5,25 +5,25 @@ import {Btn} from "../button/btn";
 export const Done = (props) => {
   return(
     <div className="done">
-      <h1 className="done-title">Done List</h1>
+      <h2 className="done-title">Done List</h2>
       {props.data.map((todo, i) => {
         let number = todo.id 
         return(
-          <div className="done-content" key={i}>
-          {todo.done === true &&
           <>
-            <div className="done-content-des" key={i}>
-              <IndividualTodo 
-                todo={todo}
-              />
+          {todo.done === true &&
+            <div className="done-content" key={i}>
+              <div className="done-content-des" key={i}>
+                <IndividualTodo 
+                  todo={todo}
+                />
+              </div>
+              <div className="done-content-btns">
+                <Btn  name={"Delete"} styleName={"btn btn-todo-delete"} actionClick={props.deleteTodo} value={number} i={String} />
+                <br/>
+              </div>
             </div>
-            <div className="done-content-btns">
-              <Btn  name={"削除する"} styleName={"btn btn-todo-delete"} actionClick={props.deleteTodo} value={number} i={String} />
-              <br/>
-            </div>
-          </>
           }
-          </div>
+          </>
         )
       })}
     </div>

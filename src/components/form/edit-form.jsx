@@ -27,8 +27,8 @@ export const EditForm = (props) => {
       </div>
 
       <div className="edit-btns">
-        <button className="btn btn-edit-todo" type="submit">変更する</button>
-        <Btn  name={"閉じる"} styleName={"btn btn-close-edit"} actionClick={props.changeEdit} value={props.number} i={String} />
+        <button className="btn btn-edit-todo" type="submit">Edit</button>
+        <button className="btn btn-close-edit" type="submit">Close</button>
       </div>
     </form>
   )

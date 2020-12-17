@@ -1,3 +1,427 @@
-.aaa{
-  color: #000;
+// 変数
+$shadow: 0px 0px 5px rgba(162, 162, 162, 0.571);
+$family:'Rajdhani', sans-serif;
+$gray:dimgray;
+$blue:#2b95ff;
+$base-color:#EEF0F4;
+
+// 関数
+@mixin position($position, $top, $right,$bottom, $left){
+  position: $position;
+  top: $top;
+  right: $right;
+  left: $left;
+  bottom: $bottom;
 }
+
+// header
+.header{
+  height: 10vh;
+  width: 100%;
+  box-shadow: $shadow;
+  position: relative;
+  &-title{
+    font-family: $family;
+    line-height: 10vh;
+    @include position(absolute,0 ,none,0 ,1vw)
+  }
+  &-btns{
+    @include position(absolute, none, 2vw, 1vh, none);
+    .btn-reset{
+      margin: 10px;
+      color: red;
+      height: 5vh;
+      width: 7vh;
+      padding: 5px 0 0 0 ;
+    }
+    .btn-open-form{
+      margin: 10px;
+      padding: 0px;
+      height: 5vh;
+      width: 5vh;
+      color: $blue;
+      font-size: 20px;
+    }
+  }
+}
+
+// btn
+.btn{
+  padding: 10px;
+  border: none;
+  background: #EEF0F4;
+  box-shadow:  inset 2px 2px 5px #BABECC, inset -5px -5px 10px #fff;
+  border-radius: 5px;
+  font-family: $family;
+  color: $gray;
+  font-size: 1vw;
+  cursor: pointer;
+  &:hover{
+    color: $gray;
+    box-shadow:  inset 1px 1px 2px #BABECC, inset -1px -1px 2px #fff;
+  }
+}
+
+// main
+main{
+  height: 90vh;
+  width: 100%;
+  display: flex;
+}
+
+// form
+.modal{
+  @include position(fixed, 0, 0, none,none );
+  background-color: rgba(0, 0, 0, 0.757);
+  z-index: 9999;
+  transform: rotateZ(9999px);
+  width: 100vw;
+}
+.form{
+  @include position(absolute,0,0,0,0 );
+  margin: auto;
+  padding: 10px;
+  max-height: 450px;
+  width: 50vh;
+  &-title{
+    min-height: 5vh;
+    padding: 10px;
+    margin: 10px;
+    position: relative;
+    &_input{
+      display: inline-block;
+      height: 5vh;
+      width: 95%;
+      padding: 0px 2.5%;
+      @include position(absolute,0 ,0 ,none ,0);
+      box-shadow:  inset 2px 2px 5px #BABECC, inset -5px -5px 10px #fff;
+      margin: auto;
+      border: none;
+      border-radius: 5px;
+      font-size: 1.3vw;
+    }
+    &_error{
+      padding: 0px 10px;
+      text-align: center;
+      font-size: 1vw;
+      color: red;
+      background-color: $base-color;
+      margin-top: 5vh;
+      border-radius: 5px;
+    }
+  }
+  &-content{
+    min-height: 30vh;
+    padding: 10px;
+    margin: 10px;
+    position: relative;
+    &_input{
+      display: inline-block;
+      height: 30vh;
+      resize: none;
+      width: 95%;
+      padding: 0px 2.5%;
+      border: none;
+      @include position(absolute,0 ,0 ,none ,0);
+      margin: auto;
+      background: $base-color;
+      box-shadow:  inset 2px 2px 5px #BABECC, inset -5px -5px 10px #fff;
+      border-radius: 5px;
+      font-size: 1vw;
+    }
+    &_error{
+      font-size: 1vw;
+      padding: 0px 10px;
+      text-align: center;
+      color: red;
+      background-color: $base-color;
+      margin-top: 30vh;
+      border-radius: 5px;
+    }
+  }
+  &-btns{
+    height: 5vh;
+    margin: 10px;
+    display: flex;
+    justify-content: space-around;
+    .btn-add-todo{
+      color: $blue;
+      border-radius: 5px;
+      cursor: pointer;
+      &:hover{
+        color: $gray;
+      }
+    }
+    .btn-close-form{
+      color: red;
+      border-radius: 5px;
+      &:hover{
+        color: $gray;
+      }
+    }
+  }
+}
+
+// todo doing review done
+.todo,
+.doing,
+.review,
+.done{
+  overflow:scroll;
+  width: calc(92vw/4);
+  box-shadow: $shadow;
+  margin: 1%;
+  &-title{
+    font-family: $family;
+    padding: 10px;
+    text-align: center;
+    text-decoration:underline;
+  }
+  &-content{
+    background-color:#d4d4d4;
+    border-radius: 5px;
+    padding: 10px 5px;
+    margin: 20px 10px;
+    &-des{
+      position: relative;
+    }
+    &-btns{
+      position: relative;
+      .btn-next{
+        @include position(absolute, none, 0, 0, none);
+        &:hover{
+          color: $blue;
+        }
+      }
+      .btn-edit-todo{
+        @include position(absolute, none, none, 0, 0);
+      }
+    }
+  }
+}
+
+//review comment
+.comment{
+  position: relative;
+  &-box{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-content: flex-start;
+    margin: 10px 0px;
+    border-radius: 5px;
+    background-color: $base-color;
+    &-des{
+      padding: 5px 5px;
+      white-space: pre-line;
+      font-size: 1vw;
+    }
+    &-btn{
+      width: 100%;
+      .btn-comment-delete{
+        float: right;
+        margin: 5px;
+      }
+    }
+  }
+  &-btns{
+    .btn-next{
+      @include position(absolute, none, 0, 0, none);
+      &:hover{
+        color: $blue;
+      }
+    }
+    .btn-comment-create{
+      @include position(absolute, none, none, 0, 0);
+    }
+  }
+}
+
+// comment
+.commentForm{
+  &-text{
+    min-height: 2vh;
+    padding: 10px;
+    margin: 10px;
+    position: relative;
+    &_input{
+      height: 4vh;
+      width: 95%;
+      padding: 0px 2.5%;
+      @include position(absolute,0 ,0 ,none ,0);
+      box-shadow:  inset 2px 2px 5px #BABECC, inset -5px -5px 10px #fff;
+      margin: auto;
+      border: none;
+      border-radius: 5px;
+      font-size: 1.3vw;
+    }
+    &_error{
+      padding: 0px 10px;
+      text-align: center;
+      font-size: 1vw;
+      color: red;
+      background-color: $base-color;
+      margin-top: 4vh;
+      border-radius: 5px;
+    }
+  }
+  &-btns{
+    height: 5vh;
+    margin: 10px;
+    display: flex;
+    justify-content: space-around;
+    .btn-add-comment{
+      border-radius: 5px;
+      color: $blue;
+      background-color: $base-color;
+      border: none;
+      cursor: pointer;
+      font-family: $family;
+      font-size: 1vw;
+      
+      box-shadow:  inset 2px 2px 5px #BABECC, inset -5px -5px 10px #fff;
+      &:hover{
+        color: $gray;
+        box-shadow:  inset 1px 1px 2px #BABECC, inset -1px -1px 2px #fff;
+      }
+    }
+    .btn-close-comenntForm{
+      border-radius: 5px;
+      color: red;
+      &:hover{
+        color: $gray;
+      }
+    }
+  }
+}
+
+
+// done
+
+.done-content-btns{
+  width: 100%;
+  padding: 0 0 10px 0;
+  .btn-todo-delete{
+    float: right;
+    &:hover{
+      color: red;
+    }
+  }
+}
+
+
+
+
+
+
+
+// edit form
+.edit{
+  &-title{
+    min-height: 5vh;
+    padding: 10px;
+    margin: 10px;
+    position: relative;
+    &_input{
+      display: inline-block;
+      height: 5vh;
+      width: 95%;
+      padding: 0px 2.5%;
+      @include position(absolute,0 ,0 ,none ,0);
+      box-shadow:  inset 2px 2px 5px #BABECC, inset -5px -5px 10px #fff;
+      margin: auto;
+      border: none;
+      border-radius: 5px;
+      font-size: 1.3vw;
+    }
+    &_error{
+      padding: 0px 10px;
+      text-align: center;
+      font-size: 1vw;
+      color: red;
+      background-color: $base-color;
+      margin-top: 5vh;
+      border-radius: 5px;
+    }
+  }
+  &-content{
+    min-height: 30vh;
+    padding: 10px;
+    margin: 10px;
+    position: relative;
+    &_input{
+      display: inline-block;
+      height: 30vh;
+      resize: none;
+      width: 95%;
+      padding: 2.5% 2.5%;
+      border: none;
+      @include position(absolute,0 ,0 ,none ,0);
+      margin: auto;
+      background: $base-color;
+      box-shadow:  inset 2px 2px 5px #BABECC, inset -5px -5px 10px #fff;
+      border-radius: 5px;
+      font-size: 1vw;
+    }
+    &_error{
+      padding: 0px 10px;
+      text-align: center;
+      font-size: 1vw;
+      color: red;
+      background-color: $base-color;
+      margin-top: 30vh;
+      border-radius: 5px;
+    }
+  }
+  &-btns{
+    height: 5vh;
+    margin: 10px;
+    display: flex;
+    justify-content: space-around;
+    .btn-edit-todo{
+      border-radius: 5px;
+      color: $blue;
+      cursor: pointer;
+      &:hover{
+        color: $gray;
+      }
+    }
+    .btn-close-edit{
+      border-radius: 5px;
+      color: red;
+      &:hover{
+        color: $gray;
+      }
+    }
+  }
+}
+
+
+
+
+
+
+// タスク詳細
+.todo-des{
+  &_id{
+    font-family: $family;
+    @include position(absolute,-25px,none ,none ,-10px );
+    padding:3px 10px;
+    background-color: $base-color;
+    box-shadow:  inset 2px 2px 5px #BABECC, inset -5px -5px 10px #fff;
+    border-radius: 10%;
+
+  }
+  &_title{
+    text-align: center;
+    padding: 10px;
+    font-size: 1.3vw;
+  }
+  &_content{
+    padding: 10px 0px;
+    white-space: pre-line;
+    font-size: 1vw;
+  }
+}
+
+//  font-family: $family;

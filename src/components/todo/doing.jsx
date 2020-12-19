@@ -10,7 +10,7 @@ export const Doing = (props) => {
       {props.data.map((todo, i) => {
         let number = todo.id
         return(
-          <>
+          <div key={i}>
           { todo.edit === true && todo.doing === true ?
             <div className="doing-content" key={i}>
               <EditForm 
@@ -42,7 +42,7 @@ export const Doing = (props) => {
             }
           </>
           }
-          </>
+          </div>
         )
       })}
     </div>

@@ -361,12 +361,19 @@ export class App extends React.Component{
     })
   }
 
+  /**
+   * 投稿モーダル表示、非表示
+   */
   handleTodo(){
     this.setState({
       openTodo: !this.state.openTodo,
     })
   }
 
+  /**
+   * コメント表示切り替え
+   * @param number //タスクのid 
+   */
   handleCommnet(number){
     const data = this.state.data.slice();
     const result = data.findIndex(({id}) => id === Number(number));

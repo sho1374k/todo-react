@@ -8,7 +8,7 @@ export const Form = (props) => {
     <>
       { props.openTodo === true &&
       <div className="modal" style={{height: height}}>
-        <form className="form" onSubmit={props.addTodo} >
+        <form className="form" onSubmit={props.addTodo} style={{height: height*0.57}} >
           <div className="form-title">
             <input className="form-title_input" type="text" name="title" placeholder="enter title"/>
             { props.error.errorTitle === true &&

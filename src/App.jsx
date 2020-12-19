@@ -15,12 +15,12 @@ export class App extends React.Component{
     super(props);
     this.state = {
       data:[
-        {id:1, title: "タイトル1", content: "コンテンツ1", notYet: true, doing: false, review: false,  done: false, edit: false, comment: [], commentForm: false },
-        {id:2, title: "タイトル2", content: "コンテンツ2", notYet: true, doing: false, review: false,  done: false, edit: false, comment: [], commentForm: false },
-        {id:3, title: "タイトル3", content: "コンテンツ3", notYet: true, doing: false, review: false,  done: false, edit: false, comment: [], commentForm: false },
-        {id:4, title: "タイトル4", content: "コンテンツ4", notYet: false, doing: false, review: true,  done: false, edit: false, comment: [{text: "aaa"},], commentForm: false },
-        {id:5, title: "タイトル5", content: "コンテンツ5", notYet: false, doing: true, review: false,  done: false, edit: false, comment: [], commentForm: false },
-        {id:6, title: "タイトル6", content: "コンテンツ6", notYet: true, doing: false, review: true,  done: false, edit: false, comment: [{text: "コメント１"}, {text: "コメント2"}], commentForm: false },
+        {id:1, title: "タイトル1", content: "コンテンツ1", notYet: true, doing: false, review: false,  done: false, edit: false, comment: [], commentForm: false  ,openComment: true,},
+        {id:2, title: "タイトル2", content: "コンテンツ2", notYet: true, doing: false, review: false,  done: false, edit: false, comment: [], commentForm: false  ,openComment: true,},
+        {id:3, title: "タイトル3", content: "コンテンツ3", notYet: true, doing: false, review: false,  done: false, edit: false, comment: [], commentForm: false  ,openComment: true,},
+        {id:4, title: "タイトル4", content: "コンテンツ4", notYet: false, doing: false, review: true,  done: false, edit: false, comment: [{text: "aaa"},], commentForm: false  ,openComment: false,},
+        {id:5, title: "タイトル5", content: "コメントのON、OFFの切り替え実装", notYet: false, doing: true, review: false,  done: false, edit: false, comment: [], commentForm: false  ,openComment: true,},
+        {id:6, title: "タイトル6", content: "コンテンツ6", notYet: true, doing: false, review: true,  done: false, edit: false, comment: [{text: "コメント１"}, {text: "コメント2"}], commentForm: false  ,openComment: false,},
         {id:7, title: "タイトル7", content: "コンテンツ7", notYet: true, doing: false, review: false,  done: true, edit: false, comment: [], commentForm: false },
       ],
       error:{
@@ -33,7 +33,6 @@ export class App extends React.Component{
       },
       commentError: false,
       openTodo: false,
-      openComment: false,
     };
 
     this.addTodo = this.addTodo.bind(this);
@@ -56,6 +55,8 @@ export class App extends React.Component{
     this.deleteComment = this.deleteComment.bind(this);
 
     this.handleTodo = this.handleTodo.bind(this);
+
+    this.handleCommnet = this.handleCommnet.bind(this);
   }
 
   /**
@@ -104,7 +105,8 @@ export class App extends React.Component{
         done: false,
         edit: false,
         commemt: [],
-        commentForm: false
+        commentForm: false,
+        openComment: true,
       })
       // 更新
       this.setState({
@@ -314,12 +316,14 @@ export class App extends React.Component{
         commentError: true,
       })
     } else {
+
       const result = data.findIndex(({id}) => id === Number(number));
 
       data[result].comment.push({
         text: String(commentValue),
       })
       data[result].commentForm = false;
+      data[result].openComment = true;
 
       this.setState({
         data: data,
@@ -357,9 +361,25 @@ export class App extends React.Component{
     })
   }
 
+  /**
+   * 投稿モーダル表示、非表示
+   */
   handleTodo(){
     this.setState({
       openTodo: !this.state.openTodo,
+    })
+  }
+
+  /**
+   * コメント表示切り替え
+   * @param number //タスクのid 
+   */
+  handleCommnet(number){
+    const data = this.state.data.slice();
+    const result = data.findIndex(({id}) => id === Number(number));
+    data[result].openComment = !data[result].openComment;
+    this.setState({
+      data: data,
     })
   }
 
@@ -370,7 +390,6 @@ export class App extends React.Component{
     const commentError = this.state.commentError;
 
     const openTodo = this.state.openTodo;
-
     return(
       <>
         <Header 
@@ -417,6 +436,7 @@ export class App extends React.Component{
             addComment={this.addComment}
             changeComment={this.changeComment}
             commentError={commentError}
+            handleCommnet={this.handleCommnet}
           />
           
           <br/><br/><br/><br/>

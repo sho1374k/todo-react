@@ -10,7 +10,7 @@ export const TodoList = (props) => {
       {props.data.map((todo, i) => {
         let number = todo.id
         return(
-          <>
+          <div key={i}>
             { todo.edit === true && todo.notYet === true?
               <div className="todo-content" key={i}>
                 <EditForm 
@@ -43,7 +43,7 @@ export const TodoList = (props) => {
               }
             </>
             }
-          </>
+          </div>
         )
       })}
     </div>

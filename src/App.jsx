@@ -15,8 +15,8 @@ export class App extends React.Component{
     super(props);
     this.state = {
       data:[
-        {id:1, title: "タイトル1", content: "コンテンツ1", notYet: true, doing: false, review: false,  done: false, edit: false, comment: [], commentForm: false  ,openComment: true,},
-        {id:2, title: "タイトル2", content: "コンテンツ2", notYet: true, doing: false, review: false,  done: false, edit: false, comment: [], commentForm: false  ,openComment: true,},
+        {id:2, title: "タイトル1", content: "コンテンツ1", notYet: true, doing: false, review: false,  done: false, edit: false, comment: [], commentForm: false  ,openComment: true,},
+        {id:1, title: "タイトル2", content: "コンテンツ2", notYet: true, doing: false, review: false,  done: false, edit: false, comment: [], commentForm: false  ,openComment: true,},
         {id:3, title: "タイトル3", content: "コンテンツ3", notYet: true, doing: false, review: false,  done: false, edit: false, comment: [], commentForm: false  ,openComment: true,},
         {id:4, title: "タイトル4", content: "コンテンツ4", notYet: false, doing: false, review: true,  done: false, edit: false, comment: [{text: "aaa"},], commentForm: false  ,openComment: false,},
         {id:5, title: "タイトル5", content: "コメントのON、OFFの切り替え実装", notYet: false, doing: true, review: false,  done: false, edit: false, comment: [], commentForm: false  ,openComment: true,},
@@ -41,22 +41,17 @@ export class App extends React.Component{
     this.changeReview = this.changeReview.bind(this);
     this.resetTodo = this.resetTodo.bind(this);
     this.changeDoing = this.changeDoing.bind(this);
-
     this.editTitle = this.editTitle.bind(this);
     this.editContent = this.editContent.bind(this);
     this.editTodo = this.editTodo.bind(this);
-
     this.changeEdit = this.changeEdit.bind(this);
-
     this.addComment = this.addComment.bind(this);
-
     this.changeComment = this.changeComment.bind(this);
-
     this.deleteComment = this.deleteComment.bind(this);
-
     this.handleTodo = this.handleTodo.bind(this);
-
     this.handleCommnet = this.handleCommnet.bind(this);
+    this.isUp = this.isUp.bind(this);
+    this.isDown = this.isDown.bind(this);
   }
 
   /**
@@ -383,6 +378,49 @@ export class App extends React.Component{
     })
   }
 
+  /**
+   * タスク上下
+   * @param number //タスクのid
+   */
+  isUp(number){
+    const data = this.state.data.slice();
+    // idと一致する配列番号検索
+    const result = data.findIndex(({id}) => id === Number(number));
+    // タスクのidを+1UP
+    data[result].id = data[result].id + 1;
+    // 次のタスクを-1Down
+    data[result+1].id = data[result+1].id -1;
+
+    console.log(data);
+
+  }
+  isDown(number){
+    const data = this.state.data.slice();
+    const result = data.findIndex(({id}) => id === Number(number));
+    console.log(number, result,"down");
+
+  }
+
+    // // 順番を上にする
+    // const isUp = (i) => {
+    //   const todo = todoList.slice();
+    //   if (!(i === 0)) {
+    //     todo.splice(i-1, 0, todo[i])      //配列i番目をi-1の配列番号に挿入
+    //     todo.splice(i+1, 1)               //挿入したことによりi+1のところに自身が取り残されているからそれを1つ削除
+    //     setTodoList(todo)                 //保存
+    //   }
+    // }
+    // // 順番を下にする
+    // const isDown = (i) => {
+    //   const todo = todoList.slice();
+    //   const length = todo.length
+    //   if (!(i === length)) {
+    //     todo.splice(i+2, 0, todo[i])      //配列i番目をi+2(自身の後ろの番号の後ろに追加するため)の配列番号に挿入
+    //     todo.splice(i, 1)                 //追加した後自身を削除する
+    //     setTodoList(todo)
+    //   }
+    // }
+
   render(){
     const data = this.state.data;
     const error = this.state.error;
@@ -412,6 +450,8 @@ export class App extends React.Component{
             editError={editError}
             changeDoing={this.changeDoing}
             changeEdit={this.changeEdit}
+            isUp={this.isUp}
+            isDown={this.isDown}
           />
 
           <br/><br/><br/><br/>

@@ -4,13 +4,16 @@ import {IndividualTodo} from "./individual-todo";
 import {Btn} from "../button/btn";
 
 export const TodoList = (props) => {
+
   return(
     <div className="todo">
       <h2 className="todo-title">Todo List</h2>
-      {props.data.map((todo, i) => {
+      {props.data.sort((a, b) => a.id - b.id).map((todo, i) => {
         let number = todo.id
+
+        console.log(number)
         return(
-          <div key={i}>
+          <div key={number}>
             { todo.edit === true && todo.notYet === true?
               <div className="todo-content" key={i}>
                 <EditForm 
@@ -23,6 +26,10 @@ export const TodoList = (props) => {
                   todo={todo}
                   i={i}
                 />
+                <div className="todo-content-btns">
+                    <button onClick={() => props.isUp(number)}>up</button>
+                    <button onClick={() => props.isDown(number)}>doun</button>
+                  </div>
               </div>
             :
             <>

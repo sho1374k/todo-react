@@ -4,14 +4,13 @@ import {IndividualTodo} from "./individual-todo";
 import {Btn} from "../button/btn";
 
 export const TodoList = (props) => {
-
+  const lenght = props.data.length;  //連想配列の長さ
   return(
     <div className="todo">
       <h2 className="todo-title">Todo List</h2>
       {props.data.sort((a, b) => a.id - b.id).map((todo, i) => {
         let number = todo.id
-
-        console.log(number)
+        
         return(
           <div key={number}>
             { todo.edit === true && todo.notYet === true?
@@ -26,10 +25,14 @@ export const TodoList = (props) => {
                   todo={todo}
                   i={i}
                 />
-                <div className="todo-content-btns">
-                    <button onClick={() => props.isUp(number)}>up</button>
-                    <button onClick={() => props.isDown(number)}>doun</button>
-                  </div>
+                <div className="order">
+                  {!(lenght ===  number) &&
+                  <button className="btn btn-up" onClick={() => props.isUp(number)}>UP</button>
+                  }
+                  {!(number === 1) &&
+                  <button className="btn btn-down" onClick={() => props.isDown(number)}>DOWN</button>
+                  }
+                </div>
               </div>
             :
             <>

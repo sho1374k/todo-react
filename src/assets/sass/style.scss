@@ -333,6 +333,17 @@ main{
 
 // edit form
 .edit{
+  &-id {
+    position: relative;
+    &-box{
+      font-family: $family;
+    @include position(absolute,-25px,none ,none ,-10px );
+    padding:3px 10px;
+    background-color: $base-color;
+    box-shadow:  inset 2px 2px 5px #BABECC, inset -5px -5px 10px #fff;
+    border-radius: 10%;
+    }
+  }
   &-title{
     min-height: 5vh;
     padding: 10px;
@@ -440,4 +451,21 @@ main{
   }
 }
 
+// 順番変更ボタン
+.order{
+  height: 5vh;
+  margin: 10px;
+  display: flex;
+  justify-content: space-around;
+  .btn-up{
+    &:hover{
+      color: $blue;
+    }
+  }
+  .btn-down{
+    &:hover{
+      color: red;
+    }
+  }
+}
 //  font-family: $family;

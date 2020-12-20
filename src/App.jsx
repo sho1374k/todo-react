@@ -15,13 +15,13 @@ export class App extends React.Component{
     super(props);
     this.state = {
       data:[
-        {id:2, title: "タイトル1", content: "コンテンツ1", notYet: true, doing: false, review: false,  done: false, edit: false, comment: [], commentForm: false  ,openComment: true,},
-        {id:1, title: "タイトル2", content: "コンテンツ2", notYet: true, doing: false, review: false,  done: false, edit: false, comment: [], commentForm: false  ,openComment: true,},
+        {id:1, title: "タイトル1", content: "コンテンツ1", notYet: true, doing: false, review: false,  done: false, edit: false, comment: [], commentForm: false  ,openComment: true,},
+        {id:2, title: "タイトル2", content: "コンテンツ2", notYet: true, doing: false, review: false,  done: false, edit: false, comment: [], commentForm: false  ,openComment: true,},
         {id:3, title: "タイトル3", content: "コンテンツ3", notYet: true, doing: false, review: false,  done: false, edit: false, comment: [], commentForm: false  ,openComment: true,},
         {id:4, title: "タイトル4", content: "コンテンツ4", notYet: false, doing: false, review: true,  done: false, edit: false, comment: [{text: "aaa"},], commentForm: false  ,openComment: false,},
         {id:5, title: "タイトル5", content: "コメントのON、OFFの切り替え実装", notYet: false, doing: true, review: false,  done: false, edit: false, comment: [], commentForm: false  ,openComment: true,},
-        {id:6, title: "タイトル6", content: "コンテンツ6", notYet: true, doing: false, review: true,  done: false, edit: false, comment: [{text: "コメント１"}, {text: "コメント2"}], commentForm: false  ,openComment: false,},
-        {id:7, title: "タイトル7", content: "コンテンツ7", notYet: true, doing: false, review: false,  done: true, edit: false, comment: [], commentForm: false },
+        {id:6, title: "タイトル6", content: "コンテンツ6", notYet: false, doing: false, review: false,  done: true, edit: false, comment: [{text: "コメント１"}, {text: "コメント2"}], commentForm: false  ,openComment: false,},
+        {id:7, title: "タイトル7", content: "コンテンツ7", notYet: true, doing: false, review: false,  done: false, edit: false, comment: [], commentForm: false },
       ],
       error:{
         errorTitle: false,
@@ -384,43 +384,34 @@ export class App extends React.Component{
    */
   isUp(number){
     const data = this.state.data.slice();
+    // データをid順に並び替え
+    data.sort((a, b) => a.id - b.id);
     // idと一致する配列番号検索
     const result = data.findIndex(({id}) => id === Number(number));
     // タスクのidを+1UP
     data[result].id = data[result].id + 1;
     // 次のタスクを-1Down
     data[result+1].id = data[result+1].id -1;
-
-    console.log(data);
+    // idを変更後idを並び替え
+    data.sort((a, b) => a.id - b.id);
+    this.setState({
+      data: data,
+    })
 
   }
   isDown(number){
     const data = this.state.data.slice();
+    data.sort((a, b) => a.id - b.id);
     const result = data.findIndex(({id}) => id === Number(number));
-    console.log(number, result,"down");
-
+    // タスクidを-1
+    data[result].id = data[result].id-1;
+    // 前のタスクを+1
+    data[result-1].id = data[result].id+1;
+    data.sort((a, b) => a.id - b.id);
+    this.setState({
+      data: data,
+    })
   }
-
-    // // 順番を上にする
-    // const isUp = (i) => {
-    //   const todo = todoList.slice();
-    //   if (!(i === 0)) {
-    //     todo.splice(i-1, 0, todo[i])      //配列i番目をi-1の配列番号に挿入
-    //     todo.splice(i+1, 1)               //挿入したことによりi+1のところに自身が取り残されているからそれを1つ削除
-    //     setTodoList(todo)                 //保存
-    //   }
-    // }
-    // // 順番を下にする
-    // const isDown = (i) => {
-    //   const todo = todoList.slice();
-    //   const length = todo.length
-    //   if (!(i === length)) {
-    //     todo.splice(i+2, 0, todo[i])      //配列i番目をi+2(自身の後ろの番号の後ろに追加するため)の配列番号に挿入
-    //     todo.splice(i, 1)                 //追加した後自身を削除する
-    //     setTodoList(todo)
-    //   }
-    // }
-
   render(){
     const data = this.state.data;
     const error = this.state.error;

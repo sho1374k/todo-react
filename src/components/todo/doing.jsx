@@ -7,7 +7,7 @@ export const Doing = (props) => {
   return(
     <div className="doing">
       <h2 className="doing-title">Doing List</h2>
-      {props.data.map((todo, i) => {
+      {props.data.sort((a, b) => a.id - b.id).map((todo, i) => {
         let number = todo.id
         return(
           <div key={i}>

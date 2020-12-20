@@ -7,7 +7,7 @@ export const Review = (props) => {
   return(
     <div className="review">
       <h2 className="review-title">Review List</h2>
-      {props.data.map((todo, i) => {
+      {props.data.sort((a, b) => a.id - b.id).map((todo, i) => {
         let number = todo.id;
         let commentArray = todo.comment;
         return(

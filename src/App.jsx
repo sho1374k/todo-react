@@ -455,6 +455,8 @@ export class App extends React.Component{
             editError={editError}
             changeReview={this.changeReview}
             changeEdit={this.changeEdit}
+            isUp={this.isUp}
+            isDown={this.isDown}
           />
 
           <br/><br/><br/><br/>
@@ -468,6 +470,8 @@ export class App extends React.Component{
             changeComment={this.changeComment}
             commentError={commentError}
             handleCommnet={this.handleCommnet}
+            isUp={this.isUp}
+            isDown={this.isDown}
           />
           
           <br/><br/><br/><br/>
@@ -476,6 +480,8 @@ export class App extends React.Component{
           <Done 
             data={data}
             deleteTodo={this.deleteTodo}
+            isUp={this.isUp}
+            isDown={this.isDown}
           />
         </main>
       </>

@@ -2,6 +2,7 @@ import React from "react";
 import {EditForm} from "../form/edit-form";
 import {IndividualTodo} from "./individual-todo";
 import {Btn} from "../button/btn";
+import {Order} from "../button/order";
 
 export const TodoList = (props) => {
   const lenght = props.data.length;  //連想配列の長さ
@@ -25,14 +26,12 @@ export const TodoList = (props) => {
                   todo={todo}
                   i={i}
                 />
-                <div className="order">
-                  {!(lenght ===  number) &&
-                  <button className="btn btn-up" onClick={() => props.isUp(number)}>UP</button>
-                  }
-                  {!(number === 1) &&
-                  <button className="btn btn-down" onClick={() => props.isDown(number)}>DOWN</button>
-                  }
-                </div>
+                <Order
+                  isUp={props.isUp}
+                  isDown={props.isDown}
+                  number={number}
+                  lenght={lenght}
+                />
               </div>
             :
             <>

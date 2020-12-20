@@ -2,8 +2,10 @@ import React from "react";
 import {EditForm} from "../form/edit-form";
 import {IndividualTodo} from "./individual-todo";
 import {Btn} from "../button/btn";
+import {Order} from "../button/order";
 
 export const Doing = (props) => {
+  const lenght = props.data.length;  //連想配列の長さ
   return(
     <div className="doing">
       <h2 className="doing-title">Doing List</h2>
@@ -22,6 +24,12 @@ export const Doing = (props) => {
                 number={number}
                 todo={todo}
                 i={i}
+              />
+              <Order
+                isUp={props.isUp}
+                isDown={props.isDown}
+                number={number}
+                lenght={lenght}
               />
             </div>
           :

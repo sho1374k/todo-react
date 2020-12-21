@@ -16,7 +16,7 @@ export const Doing = (props) => {
       {props.data.sort((a, b) => a.id - b.id).map((todo, i) => {
         let number = todo.id
         return(
-          <div key={i} onClick={() => props.openTodo(number)}>
+          <div key={i}>
           { todo.edit === true && todo.doing === true ?
             <div className="doing-content" key={i}>
               <EditForm 
@@ -30,7 +30,7 @@ export const Doing = (props) => {
           <>
             {todo.doing === true &&
             <div className="doing-content" key={i}>
-              <div className="doing-content-des" key={i}>
+              <div className="doing-content-des" key={i}  onClick={() => props.openTodo(number)}>
                 <IndividualTodo 
                   todo={todo}
                 />

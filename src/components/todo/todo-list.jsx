@@ -16,7 +16,7 @@ export const TodoList = (props) => {
       {props.data.sort((a, b) => a.id - b.id).map((todo, i) => {
         let number = todo.id
         return(
-          <div key={number} onClick={() => props.openTodo(number)}>
+          <div key={number}>
             { todo.edit === true && todo.notYet === true?
               <div className="todo-content" key={i}>
                 <EditForm 
@@ -30,11 +30,10 @@ export const TodoList = (props) => {
             <>
               {todo.notYet === true &&
                 <div className="todo-content" key={i}>
-                  <div className="todo-content-des" key={i}>
+                  <div className="todo-content-des" key={i} onClick={() => props.openTodo(number)}>
                     <IndividualTodo 
                       todo={todo}
                     />
-                    
                   </div>
                   <div className="todo-content-btns">
                     <Btn  name={<FontAwesomeIcon className="font" icon={faEllipsisH} />} styleName={"btn btn-edit-todo"} actionClick={props.changeEdit} value={number} i={String} />

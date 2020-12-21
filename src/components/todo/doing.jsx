@@ -1,4 +1,6 @@
 import React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEllipsisH, faForward } from "@fortawesome/free-solid-svg-icons";
 import {EditForm} from "../form/edit-form";
 import {IndividualTodo} from "./individual-todo";
 import {Btn} from "../button/btn";
@@ -12,7 +14,7 @@ export const Doing = (props) => {
       {props.data.sort((a, b) => a.id - b.id).map((todo, i) => {
         let number = todo.id
         return(
-          <div key={i}>
+          <div key={i} onClick={() => props.openTodo(number)}>
           { todo.edit === true && todo.doing === true ?
             <div className="doing-content" key={i}>
               <EditForm 
@@ -25,12 +27,6 @@ export const Doing = (props) => {
                 todo={todo}
                 i={i}
               />
-              <Order
-                isUp={props.isUp}
-                isDown={props.isDown}
-                number={number}
-                lenght={lenght}
-              />
             </div>
           :
           <>
@@ -42,9 +38,14 @@ export const Doing = (props) => {
                 />
               </div>
               <div className="doing-content-btns">
-                <Btn  name={"Next"} styleName={"btn btn-next"} actionClick={props.changeReview} value={number} i={String} />
-                <Btn  name={"Edit"} styleName={"btn btn-edit-todo"} actionClick={props.changeEdit} value={number} i={String} />
-                <br/><br/>
+                <Btn  name={<FontAwesomeIcon className="font" icon={faEllipsisH} />} styleName={"btn btn-edit-todo"} styleName={"btn btn-edit-todo"} actionClick={props.changeEdit} value={number} i={String} />
+                <Order
+                  isUp={props.isUp}
+                  isDown={props.isDown}
+                  number={number}
+                  lenght={lenght}
+                />
+                <Btn  name={<FontAwesomeIcon className="font" icon={faForward} />} styleName={"btn btn-next"} actionClick={props.changeReview} value={number} i={String} />
               </div>
             </div>
             }

@@ -15,13 +15,13 @@ export class App extends React.Component{
     super(props);
     this.state = {
       data:[
-        {id:1, title: "タイトル1", content: "コンテンツ1", notYet: true, doing: false, review: false,  done: false, edit: false, comment: [], commentForm: false  ,openComment: true,},
-        {id:2, title: "タイトル2", content: "コンテンツ2", notYet: true, doing: false, review: false,  done: false, edit: false, comment: [], commentForm: false  ,openComment: true,},
-        {id:3, title: "タイトル3", content: "コンテンツ3", notYet: true, doing: false, review: false,  done: false, edit: false, comment: [], commentForm: false  ,openComment: true,},
-        {id:4, title: "タイトル4", content: "コンテンツ4", notYet: false, doing: false, review: true,  done: false, edit: false, comment: [{text: "aaa"},], commentForm: false  ,openComment: false,},
-        {id:5, title: "タイトル5", content: "コメントのON、OFFの切り替え実装", notYet: false, doing: true, review: false,  done: false, edit: false, comment: [], commentForm: false  ,openComment: true,},
-        {id:6, title: "タイトル6", content: "コンテンツ6", notYet: false, doing: false, review: false,  done: true, edit: false, comment: [{text: "コメント１"}, {text: "コメント2"}], commentForm: false  ,openComment: false,},
-        {id:7, title: "タイトル7", content: "コンテンツ7", notYet: true, doing: false, review: false,  done: false, edit: false, comment: [], commentForm: false },
+        {id:1, title: "タイトル1", content: "コンテンツ1", open: false, notYet: true, doing: false, review: false,  done: false, edit: false, comment: [], commentForm: false  ,openComment: true,},
+        {id:2, title: "タイトル2", content: "コンテンツ2", open: false, notYet: true, doing: false, review: false,  done: false, edit: false, comment: [], commentForm: false  ,openComment: true,},
+        {id:3, title: "タイトル3", content: "コンテンツ3", open: false, notYet: true, doing: false, review: false,  done: false, edit: false, comment: [], commentForm: false  ,openComment: true,},
+        {id:4, title: "タイトル4", content: "コンテンツ4", open: false, notYet: false, doing: false, review: true,  done: false, edit: false, comment: [{text: "aaa"},], commentForm: false  ,openComment: false,},
+        {id:5, title: "タイトル5", content: "コメントのON、OFFの切り替え実装", open: false, notYet: false, doing: true, review: false,  done: false, edit: false, comment: [], commentForm: false  ,openComment: true,},
+        {id:6, title: "タイトル6", content: "コンテンツ6", open: false, notYet: false, doing: false, review: false,  done: true, edit: false, comment: [{text: "コメント１"}, {text: "コメント2"}], commentForm: false  ,openComment: false,},
+        {id:7, title: "タイトル7", content: "コンテンツ7", open: false, notYet: true, doing: false, review: false,  done: false, edit: false, comment: [], commentForm: false },
       ],
       error:{
         errorTitle: false,
@@ -52,6 +52,9 @@ export class App extends React.Component{
     this.handleCommnet = this.handleCommnet.bind(this);
     this.isUp = this.isUp.bind(this);
     this.isDown = this.isDown.bind(this);
+
+    this.openTodo = this.openTodo.bind(this);
+
   }
 
   /**
@@ -110,12 +113,27 @@ export class App extends React.Component{
           errorTitle: false,
           errorContent: false,
         },
+        commentError: false,
         openTodo: false,
       })
     }
     // フォームのリセット
     event.target.title.value = "";
     event.target.content.value = "";
+  }
+
+  /**
+   * タスク詳細opne
+   * @param number //タスクid
+   */
+  openTodo(number){
+    const data = this.state.data.slice();
+    // 変更するタスクのidを検索
+    const result = data.findIndex(({id}) => id === Number(number));
+    data[result].open = !data[result].open;
+    this.setState({
+      data: data
+    })
   }
 
   /**
@@ -443,6 +461,9 @@ export class App extends React.Component{
             changeEdit={this.changeEdit}
             isUp={this.isUp}
             isDown={this.isDown}
+
+            openTodo={this.openTodo}
+
           />
 
           <br/><br/><br/><br/>
@@ -457,6 +478,9 @@ export class App extends React.Component{
             changeEdit={this.changeEdit}
             isUp={this.isUp}
             isDown={this.isDown}
+
+            openTodo={this.openTodo}
+
           />
 
           <br/><br/><br/><br/>
@@ -472,6 +496,9 @@ export class App extends React.Component{
             handleCommnet={this.handleCommnet}
             isUp={this.isUp}
             isDown={this.isDown}
+
+            openTodo={this.openTodo}
+
           />
           
           <br/><br/><br/><br/>
@@ -482,6 +509,8 @@ export class App extends React.Component{
             deleteTodo={this.deleteTodo}
             isUp={this.isUp}
             isDown={this.isDown}
+
+            openTodo={this.openTodo}
           />
         </main>
       </>

@@ -1,4 +1,6 @@
 import React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTimes, faPlus} from "@fortawesome/free-solid-svg-icons";
 import {Btn} from "../button/btn";
 
 export const CommentForm = (props) => {
@@ -14,8 +16,10 @@ export const CommentForm = (props) => {
       </div>
 
       <div className="commentForm-btns">
-        <button className="brn btn-add-comment" type="submit" >Add Comment</button>
-        <Btn name={"Close"} styleName={"btn btn-close-comenntForm"} actionClick={props.changeComment} value={props.number} i={String} />
+        <button className="brn btn-add-comment" type="submit" >
+          <FontAwesomeIcon className="font" icon={faPlus} />
+        </button>
+        <Btn name={<FontAwesomeIcon className="font" icon={faTimes} />} styleName={"btn btn-close-comenntForm"} actionClick={props.changeComment} value={props.number} i={String} />
       </div>
     </form>
   )

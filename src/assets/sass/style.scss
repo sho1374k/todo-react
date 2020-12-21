@@ -171,7 +171,9 @@ main{
   overflow:scroll;
   width: calc(92vw/4);
   box-shadow: $shadow;
+  background-color:#d4d4d4;
   margin: 1%;
+  cursor: pointer;
   &-title{
     font-family: $family;
     padding: 10px;
@@ -179,7 +181,7 @@ main{
     text-decoration:underline;
   }
   &-content{
-    background-color:#d4d4d4;
+    background-color: $base-color;
     border-radius: 5px;
     padding: 10px 5px;
     margin: 20px 10px;
@@ -187,19 +189,25 @@ main{
       position: relative;
     }
     &-btns{
-      position: relative;
-      .btn-next{
-        @include position(absolute, none, 0, 0, none);
+      display: flex;
+      justify-content: flex-end;
+      height: 5vh;
+      .btn{
+        margin: 5px;
         &:hover{
           color: $blue;
         }
       }
-      .btn-edit-todo{
-        @include position(absolute, none, none, 0, 0);
+      .btn-todo-delete{
+        float: right;
+        &:hover{
+          color: red;
+        }
       }
     }
   }
 }
+
 
 //review comment
 .comment{
@@ -209,9 +217,10 @@ main{
     flex-wrap: wrap;
     justify-content: space-between;
     align-content: flex-start;
-    margin: 10px 0px;
+    margin-bottom: 10px;
     border-radius: 5px;
     background-color: $base-color;
+    box-shadow:  inset 1px 1px 2px #BABECC, inset -1px -1px 2px #fff;
     &-des{
       padding: 5px 5px;
       white-space: pre-line;
@@ -236,15 +245,17 @@ main{
     }
 
   }
+
+  
   &-btns{
-    .btn-next{
-      @include position(absolute, none, 0, 0, none);
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    .btn{
+      margin: 5px;
       &:hover{
         color: $blue;
       }
-    }
-    .btn-comment-create{
-      @include position(absolute, none, none, 0, 0);
     }
   }
   &-open{
@@ -314,16 +325,7 @@ main{
 
 // done
 
-.done-content-btns{
-  width: 100%;
-  padding: 0 0 10px 0;
-  .btn-todo-delete{
-    float: right;
-    &:hover{
-      color: red;
-    }
-  }
-}
+
 
 
 
@@ -451,21 +453,21 @@ main{
   }
 }
 
-// 順番変更ボタン
-.order{
-  height: 5vh;
-  margin: 10px;
-  display: flex;
-  justify-content: space-around;
-  .btn-up{
-    &:hover{
-      color: $blue;
-    }
-  }
-  .btn-down{
-    &:hover{
-      color: red;
-    }
-  }
-}
+// // 順番変更ボタン
+// .order{
+//   height: 5vh;
+//   margin: 10px;
+//   display: flex;
+//   justify-content: space-around;
+//   .btn-up{
+//     &:hover{
+//       color: $blue;
+//     }
+//   }
+//   .btn-down{
+//     &:hover{
+//       color: red;
+//     }
+//   }
+// }
 //  font-family: $family;

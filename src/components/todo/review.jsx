@@ -1,4 +1,8 @@
 import React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTimes, faCommentMedical, faForward } from "@fortawesome/free-solid-svg-icons";
+import { faTrashAlt, faComment } from "@fortawesome/free-regular-svg-icons";
+
 import {IndividualTodo} from "./individual-todo";
 import {CommentForm} from "../form/comment-form";
 import {Btn} from "../button/btn";
@@ -11,61 +15,63 @@ export const Review = (props) => {
         let number = todo.id;
         let commentArray = todo.comment;
         return(
-          <div key={i}>
+          <div key={i} onClick={() => props.openTodo(number)}>
           {todo.review === true &&
-            <div className="review-content" key={i}>
+            <div className="review-content">
               <div className="review-content-des">
                 <IndividualTodo 
                   todo={todo}
                 />
-                  <div className="comment">
-                    {commentArray.length > 0 &&
-                      commentArray.map((comment, i) => {
-                        return(
-                          <div className="comment-box" key={i}>
-                            {todo.openComment === true &&
-                            <>
-                              <div className="comment-box-des">
-                                {comment.text}
-                              </div>
-                              <div className="comment-box-btn">
-                                <Btn  name={"Delete"} styleName={"btn btn-comment-delete"} actionClick={props.deleteComment} value={number} i={i} />
-                              </div>
-                            </>
-                          }
+                <div className="comment">
+                  {commentArray.length > 0 &&
+                    commentArray.map((comment, i) => {
+                      return(
+                      <div key={i}>
+                        {todo.openComment === true &&
+                        <div className="comment-box">
+                          <div className="comment-box-des">
+                            {comment.text}
                           </div>
-                        )
-                      })
-                    }
-                    {commentArray.length > 0 && todo.openComment === false ?
-                      <div className="comment-open">
-                       <Btn  name={"▼"} styleName={"btn btn-comment-open"} actionClick={props.handleCommnet} value={number} i={i} />
-                     </div>
-                     :
-                     <div className="comment-open">
-                       {console.log(todo.openComment)}
-                       <Btn  name={"X"} styleName={"btn btn-comment-open"} actionClick={props.handleCommnet} value={number} i={i} />
-                     </div>
-                    }
-                    {todo.commentForm === true ?
-                      <>
-                        <CommentForm 
-                          addComment ={props.addComment}
-                          commentError={props.commentError}
-                          changeComment={props.changeComment}
-                          number={number}
-                        />
-                      </>
-                    :
-                      <div className="comment-btns">
-                        <Btn  name={"Next"} styleName={"btn btn-next"} actionClick={props.changeDone} value={number} i={i} />
-                        <Btn  name={"Comment"} styleName={"btn btn-comment-create"} actionClick={props.changeComment} value={number} i={i} />
+                          <div className="comment-box-btn">
+                            <Btn  name={<FontAwesomeIcon className="font" icon={faTrashAlt } />} styleName={"btn btn-comment-delete"} actionClick={props.deleteComment} value={number} i={i} />
+                          </div>
+                        </div>
+                        }
                       </div>
-          
-                    }
-                    <br/><br/>
-                  </div>
+                      )
+                    })
+                  } 
+                </div>
               </div>
+
+              {todo.commentForm === true ?
+                <>
+                  <CommentForm 
+                    addComment ={props.addComment}
+                    commentError={props.commentError}
+                    changeComment={props.changeComment}
+                    number={number}
+                  />
+                </>
+              :
+              <div className="review-content-btns">
+                <Btn  name={<FontAwesomeIcon className="font" icon={faCommentMedical} />} styleName={"btn btn-comment-create"} actionClick={props.changeComment} value={number} i={i} />
+                       
+                {commentArray.length > 0 && todo.openComment === false ?
+                    <button className="btn btn-comment-open" onClick={() => props.handleCommnet(number, i)}>
+                      <FontAwesomeIcon className="font" icon={faComment} /> <span>{commentArray.length}</span>
+                    </button>
+                :
+                  <>
+                    {commentArray.length > 0 && 
+                      <Btn  name={<FontAwesomeIcon className="font" icon={faTimes} />} styleName={"btn btn-comment-open"} actionClick={props.handleCommnet} value={number} i={i} />
+                    }
+                  </>
+                }
+                <Btn  name={<FontAwesomeIcon className="font" icon={faForward} />} styleName={"btn btn-next"} actionClick={props.changeDone} value={number} i={i} />
+
+              </div>
+              }
             </div>
           }
           </div>

@@ -1,4 +1,7 @@
 import React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTimes, faPlus} from "@fortawesome/free-solid-svg-icons";
+
 import {Btn} from "../button/btn";
 
 export const EditForm = (props) => {
@@ -33,8 +36,12 @@ export const EditForm = (props) => {
       </div>
 
       <div className="edit-btns">
-        <button className="btn btn-edit-todo" type="submit">Edit</button>
-        <button className="btn btn-close-edit" type="submit">Close</button>
+        <button className="btn btn-edit-todo" type="submit">
+          <FontAwesomeIcon className="font" icon={faPlus} />
+        </button>
+        <button className="btn btn-close-edit" type="submit">
+          <FontAwesomeIcon className="font" icon={faTimes} />
+        </button>
       </div>
     </form>
   )

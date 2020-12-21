@@ -146,6 +146,8 @@ main{
     display: flex;
     justify-content: space-around;
     .btn-add-todo{
+      height: 5vh;
+      width: 5vh;
       color: $blue;
       border-radius: 5px;
       cursor: pointer;
@@ -154,6 +156,8 @@ main{
       }
     }
     .btn-close-form{
+      height: 5vh;
+      width: 5vh;
       color: red;
       border-radius: 5px;
       &:hover{
@@ -207,6 +211,9 @@ main{
           color: red;
         }
       }
+      .btn-prev{
+        margin-right: auto;
+      }
     }
   }
 }
@@ -234,6 +241,9 @@ main{
       .btn-comment-delete{
         float: right;
         margin: 5px;
+        &:hover{
+          color: red;
+        }
       }
     }
     &-open{
@@ -246,10 +256,7 @@ main{
         font-size: 1vw;
       }
     }
-
   }
-
-  
   &-btns{
     width: 100%;
     display: flex;
@@ -297,12 +304,13 @@ main{
   }
   &-btns{
     height: 5vh;
-    margin: 10px;
     display: flex;
     justify-content: space-around;
     .btn-add-comment{
       border-radius: 5px;
       color: $blue;
+      height: 5vh;
+      width: 5vh;
       background-color: $base-color;
       border: none;
       cursor: pointer;
@@ -316,6 +324,8 @@ main{
       }
     }
     .btn-close-comenntForm{
+      height: 5vh;
+      width: 5vh;
       border-radius: 5px;
       color: red;
       &:hover{
@@ -324,10 +334,6 @@ main{
     }
   }
 }
-
-
-
-
 
 // edit form
 .edit{
@@ -404,6 +410,8 @@ main{
     display: flex;
     justify-content: space-around;
     .btn-edit-todo{
+      height: 5vh;
+      width: 5vh;
       border-radius: 5px;
       color: $blue;
       cursor: pointer;
@@ -412,6 +420,8 @@ main{
       }
     }
     .btn-close-edit{
+      height: 5vh;
+      width: 5vh;
       border-radius: 5px;
       color: red;
       &:hover{
@@ -421,20 +431,20 @@ main{
   }
 }
 
-
-
-
-
-
 // タスク詳細
 .todo-des{
   &_id{
     font-family: $family;
     @include position(absolute,-25px,none ,none ,-10px );
-    padding:3px 10px;
+    height: 4vh;
+    width: 4vh;
+    padding: 0;
+    line-height: 4vh;
+    text-align: center;
     background-color: $base-color;
-    box-shadow:  inset 2px 2px 5px #BABECC, inset -5px -5px 10px #fff;
+    box-shadow: $shadow;
     border-radius: 10%;
+    font-size:20px;
 
   }
   &_title{
@@ -449,6 +459,3 @@ main{
     font-size: 1vw;
   }
 }
-
-
-//  font-family: $family;

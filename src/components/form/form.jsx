@@ -1,4 +1,6 @@
 import React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTimes, faPlus} from "@fortawesome/free-solid-svg-icons";
 import {Btn} from "../button/btn";
 
 export const Form = (props) => {
@@ -29,8 +31,10 @@ export const Form = (props) => {
             }
           </div>
           <div className="form-btns">
-            <button className="btn btn-add-todo" type="submit">add todo</button>
-            <Btn  name={"Close"} styleName={"btn btn-close-form"} actionClick={props.handleTodo} value={String} i={String} />
+            <button className="btn btn-add-todo" type="submit">
+              <FontAwesomeIcon className="font" icon={faPlus} />
+            </button>
+            <Btn  name={<FontAwesomeIcon className="font" icon={faTimes} />} styleName={"btn btn-close-form"} actionClick={props.handleTodo} value={String} i={String} />
           </div>
         </form>
       </div>

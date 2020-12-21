@@ -9,9 +9,11 @@ export const IndividualTodo = (props) => {
       <div className="todo-des_title">
         {props.todo.title}
       </div>
+      { props.todo.open === true &&
       <div className="todo-des_content">
         {props.todo.content}
       </div>
+      }
     </div>
   )
 }

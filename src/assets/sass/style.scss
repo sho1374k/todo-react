@@ -146,6 +146,8 @@ main{
     display: flex;
     justify-content: space-around;
     .btn-add-todo{
+      height: 5vh;
+      width: 5vh;
       color: $blue;
       border-radius: 5px;
       cursor: pointer;
@@ -154,6 +156,8 @@ main{
       }
     }
     .btn-close-form{
+      height: 5vh;
+      width: 5vh;
       color: red;
       border-radius: 5px;
       &:hover{
@@ -171,7 +175,9 @@ main{
   overflow:scroll;
   width: calc(92vw/4);
   box-shadow: $shadow;
+  background-color:#d4d4d4;
   margin: 1%;
+  cursor: pointer;
   &-title{
     font-family: $family;
     padding: 10px;
@@ -179,7 +185,7 @@ main{
     text-decoration:underline;
   }
   &-content{
-    background-color:#d4d4d4;
+    background-color: $base-color;
     border-radius: 5px;
     padding: 10px 5px;
     margin: 20px 10px;
@@ -187,19 +193,31 @@ main{
       position: relative;
     }
     &-btns{
-      position: relative;
-      .btn-next{
-        @include position(absolute, none, 0, 0, none);
+      display: flex;
+      justify-content: flex-end;
+      height: 5vh;
+      .btn{
+        margin: 5px;
         &:hover{
           color: $blue;
         }
+        span{
+          font-weight: bold;
+        }
       }
-      .btn-edit-todo{
-        @include position(absolute, none, none, 0, 0);
+      .btn-todo-delete{
+        float: right;
+        &:hover{
+          color: red;
+        }
+      }
+      .btn-prev{
+        margin-right: auto;
       }
     }
   }
 }
+
 
 //review comment
 .comment{
@@ -209,9 +227,10 @@ main{
     flex-wrap: wrap;
     justify-content: space-between;
     align-content: flex-start;
-    margin: 10px 0px;
+    margin-bottom: 10px;
     border-radius: 5px;
     background-color: $base-color;
+    box-shadow:  inset 1px 1px 2px #BABECC, inset -1px -1px 2px #fff;
     &-des{
       padding: 5px 5px;
       white-space: pre-line;
@@ -222,6 +241,9 @@ main{
       .btn-comment-delete{
         float: right;
         margin: 5px;
+        &:hover{
+          color: red;
+        }
       }
     }
     &-open{
@@ -234,17 +256,16 @@ main{
         font-size: 1vw;
       }
     }
-
   }
   &-btns{
-    .btn-next{
-      @include position(absolute, none, 0, 0, none);
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    .btn{
+      margin: 5px;
       &:hover{
         color: $blue;
       }
-    }
-    .btn-comment-create{
-      @include position(absolute, none, none, 0, 0);
     }
   }
   &-open{
@@ -283,12 +304,13 @@ main{
   }
   &-btns{
     height: 5vh;
-    margin: 10px;
     display: flex;
     justify-content: space-around;
     .btn-add-comment{
       border-radius: 5px;
       color: $blue;
+      height: 5vh;
+      width: 5vh;
       background-color: $base-color;
       border: none;
       cursor: pointer;
@@ -302,6 +324,8 @@ main{
       }
     }
     .btn-close-comenntForm{
+      height: 5vh;
+      width: 5vh;
       border-radius: 5px;
       color: red;
       &:hover{
@@ -311,28 +335,19 @@ main{
   }
 }
 
-
-// done
-
-.done-content-btns{
-  width: 100%;
-  padding: 0 0 10px 0;
-  .btn-todo-delete{
-    float: right;
-    &:hover{
-      color: red;
-    }
-  }
-}
-
-
-
-
-
-
-
 // edit form
 .edit{
+  &-id {
+    position: relative;
+    &-box{
+      font-family: $family;
+    @include position(absolute,-25px,none ,none ,-10px );
+    padding:3px 10px;
+    background-color: $base-color;
+    box-shadow:  inset 2px 2px 5px #BABECC, inset -5px -5px 10px #fff;
+    border-radius: 10%;
+    }
+  }
   &-title{
     min-height: 5vh;
     padding: 10px;
@@ -395,6 +410,8 @@ main{
     display: flex;
     justify-content: space-around;
     .btn-edit-todo{
+      height: 5vh;
+      width: 5vh;
       border-radius: 5px;
       color: $blue;
       cursor: pointer;
@@ -403,6 +420,8 @@ main{
       }
     }
     .btn-close-edit{
+      height: 5vh;
+      width: 5vh;
       border-radius: 5px;
       color: red;
       &:hover{
@@ -412,26 +431,27 @@ main{
   }
 }
 
-
-
-
-
-
 // タスク詳細
 .todo-des{
   &_id{
     font-family: $family;
     @include position(absolute,-25px,none ,none ,-10px );
-    padding:3px 10px;
+    height: 4vh;
+    width: 4vh;
+    padding: 0;
+    line-height: 4vh;
+    text-align: center;
     background-color: $base-color;
-    box-shadow:  inset 2px 2px 5px #BABECC, inset -5px -5px 10px #fff;
+    box-shadow: $shadow;
     border-radius: 10%;
+    font-size:20px;
 
   }
   &_title{
     text-align: center;
     padding: 10px;
     font-size: 1.3vw;
+    text-decoration:underline;
   }
   &_content{
     padding: 10px 0px;
@@ -439,5 +459,3 @@ main{
     font-size: 1vw;
   }
 }
-
-//  font-family: $family;

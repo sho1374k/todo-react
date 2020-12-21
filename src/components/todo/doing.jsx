@@ -1,16 +1,20 @@
 import React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEllipsisH, faForward, faBackward } from "@fortawesome/free-solid-svg-icons";
 import {EditForm} from "../form/edit-form";
 import {IndividualTodo} from "./individual-todo";
 import {Btn} from "../button/btn";
+import {Order} from "../button/order";
 
 export const Doing = (props) => {
+  const lenght = props.data.length;  //連想配列の長さ
   return(
     <div className="doing">
       <h2 className="doing-title">Doing List</h2>
-      {props.data.map((todo, i) => {
+      {props.data.sort((a, b) => a.id - b.id).map((todo, i) => {
         let number = todo.id
         return(
-          <div key={i}>
+          <div key={i} onClick={() => props.openTodo(number)}>
           { todo.edit === true && todo.doing === true ?
             <div className="doing-content" key={i}>
               <EditForm 
@@ -34,9 +38,15 @@ export const Doing = (props) => {
                 />
               </div>
               <div className="doing-content-btns">
-                <Btn  name={"Next"} styleName={"btn btn-next"} actionClick={props.changeReview} value={number} i={String} />
-                <Btn  name={"Edit"} styleName={"btn btn-edit-todo"} actionClick={props.changeEdit} value={number} i={String} />
-                <br/><br/>
+              <Btn  name={<FontAwesomeIcon className="font" icon={faBackward} />} styleName={"btn btn-prev"} actionClick={props.prevTodo} value={number} i={i} />
+                <Btn  name={<FontAwesomeIcon className="font" icon={faEllipsisH} />} styleName={"btn btn-edit-todo"} styleName={"btn btn-edit-todo"} actionClick={props.changeEdit} value={number} i={String} />
+                <Order
+                  isUp={props.isUp}
+                  isDown={props.isDown}
+                  number={number}
+                  lenght={lenght}
+                />
+                <Btn  name={<FontAwesomeIcon className="font" icon={faForward} />} styleName={"btn btn-next"} actionClick={props.nextReview} value={number} i={String} />
               </div>
             </div>
             }

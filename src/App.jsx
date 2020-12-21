@@ -40,12 +40,14 @@ export class App extends React.Component{
     this.handleTodo = this.handleTodo.bind(this);        //タスク投稿モーダル表示切り替え
     this.openTodo = this.openTodo.bind(this);            //タスクのデスクリプションの表示切り替え
 
-    this.nextDoing = this.nextDoing.bind(this);      //doing移動
-    this.nextReview = this.nextReview.bind(this);    //レビュー移動
-    this.nextDone = this.nextDone.bind(this);        //完了移動
+    this.isNext = this.isNext.bind(this);                //処理関数
+    this.nextDoing = this.nextDoing.bind(this);          //doing移動
+    this.nextReview = this.nextReview.bind(this);        //レビュー移動
+    this.nextDone = this.nextDone.bind(this);            //完了移動
 
-    this.prevTodo = this.prevTodo.bind(this);      //doing移動
-    this.prevDoing = this.prevDoing.bind(this);    //レビュー移動
+    this.isPrev = this.isPrev.bind(this);                //処理関数
+    this.prevTodo = this.prevTodo.bind(this);            //doing移動
+    this.prevDoing = this.prevDoing.bind(this);          //レビュー移動
     this.prevReview = this.prevReview.bind(this);        //完了移動
 
     this.resetTodo = this.resetTodo.bind(this);          //リセット
@@ -62,8 +64,6 @@ export class App extends React.Component{
 
     this.isUp = this.isUp.bind(this);                    //idアップ
     this.isDown = this.isDown.bind(this);                //idダウン
-    
-
   }
 
   /**
@@ -103,17 +103,10 @@ export class App extends React.Component{
     } else {
       // バリデ突破！
       data.push({
-        id: Number(countNum) + 1,
-        title: title,
-        content: content,
-        notYet: true,
-        doing: false,
-        review: false,
-        done: false,
-        edit: false,
-        commemt: [],
-        commentForm: false,
-        openComment: true,
+        id: Number(countNum) + 1, 
+        title: title,    content: content,   open:false,      edit: false,
+        notYet: true,    doing: false,       review: false,   done: false,
+        commemt: [],     commentForm: false, openComment: true,
       })
       // 更新
       this.setState({
@@ -146,73 +139,72 @@ export class App extends React.Component{
   }
 
   /**
-   * next タスク
+   * 次のタスクへ
+   * @param value //リスト判断の値
    * @param number //タスクのid 
    */
-  nextDoing(number){
+  isNext(value, number) {
     const data = this.state.data.slice();
     // 実行中に移動させるタスクのidを連想配列から検索
     const result = data.findIndex(({id}) => id === Number(number));
-    data[result].doing = true;
-    data[result].notYet = false;
+    if (value ===  "doing") {
+      data[result].doing = true;
+      data[result].notYet = false;
+    }
+    if (value === "review") {
+      data[result].review = true;
+      data[result].doing = false;
+    }
+    if (value === "done") {
+      data[result].done = true;
+      data[result].review = false;
+    }
     this.setState({
       data: data
     })
-  }
-  nextReview(number){
-    const data = this.state.data.slice();
-    // 確認待ちにしたいタスクのidを連想配列から検索
-    const result = data.findIndex(({id}) => id === Number(number));
-    data[result].review = true;
-    data[result].doing = false;
-    data[result].comment = [];
-    this.setState({
-      data: data
-    })
+   }
+   nextDoing(number){
+     this.isNext("doing",number);
+   }
+   nextReview(number){
+    this.isNext("review",number);
   }
   nextDone(number){
-    const data = this.state.data.slice();
-    // 完了したいタスクのidを連想配列から検索
-    const result = data.findIndex(({id}) => id === Number(number));
-    data[result].done = true;
-    data[result].review = false;
-    this.setState({
-      data: data,
-    })
+    this.isNext("done",number);
   }
 
   /**
-   * prev タスク
+   * 前のタスクへ
+   * @param value //リスト判断の値
    * @param number //タスクのid 
    */
-  prevTodo(number){
-    console.log("todo")
+  isPrev(value, number){
     const data = this.state.data.slice();
     const result = data.findIndex(({id}) => id === Number(number));
-    data[result].notYet = true;
-    data[result].doing = false;
+    if (value === "todo") {
+      data[result].notYet = true;
+      data[result].doing = false;
+    }
+    if (value == "doing") {
+      data[result].doing = true;
+      data[result].review = false;
+    }
+    if (value === "review") {
+      data[result].review = true;
+    data[result].done = false;
+    }
     this.setState({
       data: data,
     })
-
+  }
+  prevTodo(number){
+    this.isPrev("todo", number);
   }
   prevDoing(number){
-    const data = this.state.data.slice();
-    const result = data.findIndex(({id}) => id === Number(number));
-    data[result].doing = true;
-    data[result].review = false;
-    this.setState({
-      data: data,
-    })
+    this.isPrev("doing", number);
   }
   prevReview(number){
-    const data = this.state.data.slice();
-    const result = data.findIndex(({id}) => id === Number(number));
-    data[result].review = true;
-    data[result].done = false;
-    this.setState({
-      data: data,
-    })
+    this.isPrev("review", number);
   }
 
   /**
@@ -232,20 +224,6 @@ export class App extends React.Component{
       })
     }
   }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   // リセット
   resetTodo(){
     const data = this.state.data.slice();
@@ -346,7 +324,6 @@ export class App extends React.Component{
         }
       })
     }
-    
   }
 
   /**
@@ -357,23 +334,18 @@ export class App extends React.Component{
   addComment(event, number){
     event.preventDefault();
     const data = this.state.data.slice();
-    
-
     const commentValue = event.target.comment.value;
     if (commentValue === "") {
       this.setState({
         commentError: true,
       })
     } else {
-
       const result = data.findIndex(({id}) => id === Number(number));
-
       data[result].comment.push({
         text: String(commentValue),
       })
       data[result].commentForm = false;
       data[result].openComment = true;
-
       this.setState({
         data: data,
         commentError: false,
@@ -394,7 +366,6 @@ export class App extends React.Component{
       data: data
     })
   }
-
 
   /**
    * コメント削除
@@ -451,7 +422,6 @@ export class App extends React.Component{
     this.setState({
       data: data,
     })
-
   }
   isDown(number){
     const data = this.state.data.slice();
@@ -467,86 +437,46 @@ export class App extends React.Component{
     })
   }
   render(){
-    const data = this.state.data;
-    const error = this.state.error;
-    const editError = this.state.editError;
-    const commentError = this.state.commentError;
-
-    const openTodo = this.state.openTodo;
+    const {data, error, editError, commentError, openTodo} = this.state;
     return(
       <>
-        <Header 
-          resetTodo={this.resetTodo}
-          handleTodo={this.handleTodo}
-        />
+        <Header resetTodo={this.resetTodo} handleTodo={this.handleTodo} />
         <main>
           <Form 
-            openTodo={openTodo}
-            addTodo={this.addTodo}
-            error={error}
-            handleTodo={this.handleTodo}
+            openTodo={openTodo} addTodo={this.addTodo}
+            error={error}       handleTodo={this.handleTodo}
           />
 
           <TodoList 
-            data={data}
-            editTodo={this.editTodo}
-            editTitle={this.editTitle}
-            editContent={this.editContent}
-            editError={editError}
-            nextDoing={this.nextDoing}
-            changeEdit={this.changeEdit}
-            isUp={this.isUp}
-            isDown={this.isDown}
-
-            openTodo={this.openTodo}
-
+            data={data}                  editTodo={this.editTodo}
+            editTitle={this.editTitle}   editContent={this.editContent}
+            editError={editError}        nextDoing={this.nextDoing}
+            changeEdit={this.changeEdit} openTodo={this.openTodo}
+            isUp={this.isUp}             isDown={this.isDown}
           />
 
           <Doing 
-            data={data}
-            editTodo={this.editTodo}
-            editTitle={this.editTitle}
-            editContent={this.editContent}
-            editError={editError}
-            nextReview={this.nextReview}
+            data={data}                   editTodo={this.editTodo}
+            editTitle={this.editTitle}    editContent={this.editContent}
+            editError={editError}         openTodo={this.openTodo}
+            nextReview={this.nextReview}  prevTodo={this.prevTodo}
             changeEdit={this.changeEdit}
-            isUp={this.isUp}
-            isDown={this.isDown}
-
-            openTodo={this.openTodo}
-
-            prevTodo={this.prevTodo}
-
+            isUp={this.isUp}              isDown={this.isDown}
           />
 
-          {/* 確認まちタスク */}
           <Review 
-            data={data}
-            deleteComment={this.deleteComment}
-            nextDone={this.nextDone}
-            addComment={this.addComment}
-            changeComment={this.changeComment}
-            commentError={commentError}
-            handleCommnet={this.handleCommnet}
-            isUp={this.isUp}
-            isDown={this.isDown}
-
+            data={data}                   deleteComment={this.deleteComment}
+            nextDone={this.nextDone}      prevDoing={this.prevDoing}
+            addComment={this.addComment}  changeComment={this.changeComment}
+            commentError={commentError}   handleCommnet={this.handleCommnet}
+            isUp={this.isUp}              isDown={this.isDown}
             openTodo={this.openTodo}
-
-            prevDoing={this.prevDoing}
-
           />
-          
-          {/* 完了タスク */}
+
           <Done 
-            data={data}
-            deleteTodo={this.deleteTodo}
-            isUp={this.isUp}
-            isDown={this.isDown}
-
-            openTodo={this.openTodo}
-
-            prevReview={this.prevReview}
+            data={data}              deleteTodo={this.deleteTodo}
+            isUp={this.isUp}         isDown={this.isDown}
+            openTodo={this.openTodo} prevReview={this.prevReview}
           />
         </main>
       </>

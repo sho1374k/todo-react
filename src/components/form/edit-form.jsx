@@ -1,4 +1,5 @@
 import React from "react";
+// npm
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes, faPlus} from "@fortawesome/free-solid-svg-icons";
 
@@ -10,7 +11,6 @@ export const EditForm = (props) => {
           {props.todo.id}
         </div>
       </div>
-
       <div className="edit-title">
         <input className="edit-title_input" type="text" name="title" placeholder="enter title" 
           value={props.todo.title} onChange={(event) => props.editTitle(event, props.number)}/>
@@ -21,7 +21,6 @@ export const EditForm = (props) => {
           </div>
         }
       </div>
-      
       <div className="edit-content">
         <textarea className="edit-content_input" name="content" id="" cols="30" rows="4" placeholder="enter text"
           onChange={(event) => props.editContent(event, props.number)} value={props.todo.content}/>
@@ -32,7 +31,6 @@ export const EditForm = (props) => {
           </div>
         }
       </div>
-
       <div className="edit-btns">
         <button className="btn btn-edit-todo" type="submit">
           <FontAwesomeIcon className="font" icon={faPlus} />

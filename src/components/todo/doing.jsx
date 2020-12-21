@@ -1,6 +1,8 @@
 import React from "react";
+// npm
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEllipsisH, faForward, faBackward } from "@fortawesome/free-solid-svg-icons";
+// components
 import {EditForm} from "../form/edit-form";
 import {IndividualTodo} from "./individual-todo";
 import {Btn} from "../button/btn";
@@ -18,14 +20,10 @@ export const Doing = (props) => {
           { todo.edit === true && todo.doing === true ?
             <div className="doing-content" key={i}>
               <EditForm 
-                editTodo={props.editTodo}
-                editTitle={props.editTitle}
-                editContent={props.editContent}
-                editError={props.editError}
-                changeEdit={props.changeEdit}
-                number={number}
-                todo={todo}
-                i={i}
+                editTodo={props.editTodo}        editTitle={props.editTitle}
+                editContent={props.editContent}  editError={props.editError}
+                changeEdit={props.changeEdit}    number={number}
+                todo={todo} i={i}
               />
             </div>
           :

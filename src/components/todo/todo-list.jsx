@@ -50,7 +50,7 @@ export const TodoList = (props) => {
                       number={number}
                       lenght={lenght}
                     />
-                    <Btn  name={<FontAwesomeIcon className="font" icon={faForward} />} styleName={"btn btn-next"} actionClick={props.changeDoing} value={number} i={String} />
+                    <Btn  name={<FontAwesomeIcon className="font" icon={faForward} />} styleName={"btn btn-next"} actionClick={props.nextDoing} value={number} i={String} />
                   </div>
                 </div>
               }

@@ -197,6 +197,9 @@ main{
         &:hover{
           color: $blue;
         }
+        span{
+          font-weight: bold;
+        }
       }
       .btn-todo-delete{
         float: right;
@@ -323,13 +326,6 @@ main{
 }
 
 
-// done
-
-
-
-
-
-
 
 
 
@@ -445,6 +441,7 @@ main{
     text-align: center;
     padding: 10px;
     font-size: 1.3vw;
+    text-decoration:underline;
   }
   &_content{
     padding: 10px 0px;
@@ -453,21 +450,5 @@ main{
   }
 }
 
-// // 順番変更ボタン
-// .order{
-//   height: 5vh;
-//   margin: 10px;
-//   display: flex;
-//   justify-content: space-around;
-//   .btn-up{
-//     &:hover{
-//       color: $blue;
-//     }
-//   }
-//   .btn-down{
-//     &:hover{
-//       color: red;
-//     }
-//   }
-// }
+
 //  font-family: $family;

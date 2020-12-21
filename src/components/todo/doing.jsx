@@ -1,6 +1,6 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEllipsisH, faForward } from "@fortawesome/free-solid-svg-icons";
+import { faEllipsisH, faForward, faBackward } from "@fortawesome/free-solid-svg-icons";
 import {EditForm} from "../form/edit-form";
 import {IndividualTodo} from "./individual-todo";
 import {Btn} from "../button/btn";
@@ -38,6 +38,7 @@ export const Doing = (props) => {
                 />
               </div>
               <div className="doing-content-btns">
+              <Btn  name={<FontAwesomeIcon className="font" icon={faBackward} />} styleName={"btn btn-prev"} actionClick={props.prevTodo} value={number} i={i} />
                 <Btn  name={<FontAwesomeIcon className="font" icon={faEllipsisH} />} styleName={"btn btn-edit-todo"} styleName={"btn btn-edit-todo"} actionClick={props.changeEdit} value={number} i={String} />
                 <Order
                   isUp={props.isUp}
@@ -45,7 +46,7 @@ export const Doing = (props) => {
                   number={number}
                   lenght={lenght}
                 />
-                <Btn  name={<FontAwesomeIcon className="font" icon={faForward} />} styleName={"btn btn-next"} actionClick={props.changeReview} value={number} i={String} />
+                <Btn  name={<FontAwesomeIcon className="font" icon={faForward} />} styleName={"btn btn-next"} actionClick={props.nextReview} value={number} i={String} />
               </div>
             </div>
             }

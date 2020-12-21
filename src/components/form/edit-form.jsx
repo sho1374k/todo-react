@@ -2,8 +2,6 @@ import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes, faPlus} from "@fortawesome/free-solid-svg-icons";
 
-import {Btn} from "../button/btn";
-
 export const EditForm = (props) => {
   return(
     <form className="edit" onSubmit={(event) => props.editTodo(event, props.number)}>

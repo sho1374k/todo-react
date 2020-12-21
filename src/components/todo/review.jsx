@@ -1,6 +1,6 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTimes, faCommentMedical, faForward } from "@fortawesome/free-solid-svg-icons";
+import { faTimes, faCommentMedical, faForward, faBackward } from "@fortawesome/free-solid-svg-icons";
 import { faTrashAlt, faComment } from "@fortawesome/free-regular-svg-icons";
 
 import {IndividualTodo} from "./individual-todo";
@@ -55,8 +55,8 @@ export const Review = (props) => {
                 </>
               :
               <div className="review-content-btns">
+                <Btn  name={<FontAwesomeIcon className="font" icon={faBackward} />} styleName={"btn btn-prev"} actionClick={props.prevDoing} value={number} i={i} />
                 <Btn  name={<FontAwesomeIcon className="font" icon={faCommentMedical} />} styleName={"btn btn-comment-create"} actionClick={props.changeComment} value={number} i={i} />
-                       
                 {commentArray.length > 0 && todo.openComment === false ?
                     <button className="btn btn-comment-open" onClick={() => props.handleCommnet(number, i)}>
                       <FontAwesomeIcon className="font" icon={faComment} /> <span>{commentArray.length}</span>
@@ -68,7 +68,7 @@ export const Review = (props) => {
                     }
                   </>
                 }
-                <Btn  name={<FontAwesomeIcon className="font" icon={faForward} />} styleName={"btn btn-next"} actionClick={props.changeDone} value={number} i={i} />
+                <Btn  name={<FontAwesomeIcon className="font" icon={faForward} />} styleName={"btn btn-next"} actionClick={props.nextDone} value={number} i={i} />
 
               </div>
               }

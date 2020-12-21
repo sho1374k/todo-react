@@ -1,6 +1,7 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrashAlt } from "@fortawesome/free-regular-svg-icons";
+import { faTrashAlt} from "@fortawesome/free-regular-svg-icons";
+import { faBackward } from "@fortawesome/free-solid-svg-icons";
 import {IndividualTodo} from "./individual-todo";
 import {Btn} from "../button/btn";
 
@@ -20,6 +21,7 @@ export const Done = (props) => {
                 />
               </div>
               <div className="done-content-btns">
+                <Btn  name={<FontAwesomeIcon className="font" icon={faBackward} />} styleName={"btn btn-prev"} actionClick={props.prevReview} value={number} i={i} />
                 <Btn  name={<FontAwesomeIcon className="font" icon={faTrashAlt } />} styleName={"btn btn-todo-delete"} actionClick={props.deleteTodo} value={number} i={String} />
               </div>
             </div>

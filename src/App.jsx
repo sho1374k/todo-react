@@ -35,25 +35,34 @@ export class App extends React.Component{
       openTodo: false,
     };
 
-    this.addTodo = this.addTodo.bind(this);
-    this.deleteTodo = this.deleteTodo.bind(this);
-    this.changeDone = this.changeDone.bind(this);
-    this.changeReview = this.changeReview.bind(this);
-    this.resetTodo = this.resetTodo.bind(this);
-    this.changeDoing = this.changeDoing.bind(this);
-    this.editTitle = this.editTitle.bind(this);
-    this.editContent = this.editContent.bind(this);
-    this.editTodo = this.editTodo.bind(this);
-    this.changeEdit = this.changeEdit.bind(this);
-    this.addComment = this.addComment.bind(this);
-    this.changeComment = this.changeComment.bind(this);
-    this.deleteComment = this.deleteComment.bind(this);
-    this.handleTodo = this.handleTodo.bind(this);
-    this.handleCommnet = this.handleCommnet.bind(this);
-    this.isUp = this.isUp.bind(this);
-    this.isDown = this.isDown.bind(this);
+    this.addTodo = this.addTodo.bind(this);              //タスク投稿
+    this.deleteTodo = this.deleteTodo.bind(this);        //タスク削除
+    this.handleTodo = this.handleTodo.bind(this);        //タスク投稿モーダル表示切り替え
+    this.openTodo = this.openTodo.bind(this);            //タスクのデスクリプションの表示切り替え
 
-    this.openTodo = this.openTodo.bind(this);
+    this.nextDoing = this.nextDoing.bind(this);      //doing移動
+    this.nextReview = this.nextReview.bind(this);    //レビュー移動
+    this.nextDone = this.nextDone.bind(this);        //完了移動
+
+    this.prevTodo = this.prevTodo.bind(this);      //doing移動
+    this.prevDoing = this.prevDoing.bind(this);    //レビュー移動
+    this.prevReview = this.prevReview.bind(this);        //完了移動
+
+    this.resetTodo = this.resetTodo.bind(this);          //リセット
+  
+    this.changeEdit = this.changeEdit.bind(this);        //編集モード切り替え
+    this.editTitle = this.editTitle.bind(this);          //タイトル変更アクション
+    this.editContent = this.editContent.bind(this);      //コンテント変更アクション
+    this.editTodo = this.editTodo.bind(this);            //タスク変更submit
+    
+    this.addComment = this.addComment.bind(this);        //コメント追加
+    this.changeComment = this.changeComment.bind(this);  //コメントモード
+    this.deleteComment = this.deleteComment.bind(this);  //コメント削除
+    this.handleCommnet = this.handleCommnet.bind(this);  //コメント表示切り替え
+
+    this.isUp = this.isUp.bind(this);                    //idアップ
+    this.isDown = this.isDown.bind(this);                //idダウン
+    
 
   }
 
@@ -137,59 +146,73 @@ export class App extends React.Component{
   }
 
   /**
-   * 実行中に移動させる
+   * next タスク
    * @param number //タスクのid 
    */
-  changeDoing(number){
-    const bool = window.confirm("タスクを実行しますか？");
-    if (bool === true) {
-      const data = this.state.data.slice();
-      // 実行中に移動させるタスクのidを連想配列から検索
-      const result = data.findIndex(({id}) => id === Number(number));
-      data[result].doing = true;
-      data[result].notYet = false;
-      this.setState({
-        data: data
-      })
-    }
-
+  nextDoing(number){
+    const data = this.state.data.slice();
+    // 実行中に移動させるタスクのidを連想配列から検索
+    const result = data.findIndex(({id}) => id === Number(number));
+    data[result].doing = true;
+    data[result].notYet = false;
+    this.setState({
+      data: data
+    })
+  }
+  nextReview(number){
+    const data = this.state.data.slice();
+    // 確認待ちにしたいタスクのidを連想配列から検索
+    const result = data.findIndex(({id}) => id === Number(number));
+    data[result].review = true;
+    data[result].doing = false;
+    data[result].comment = [];
+    this.setState({
+      data: data
+    })
+  }
+  nextDone(number){
+    const data = this.state.data.slice();
+    // 完了したいタスクのidを連想配列から検索
+    const result = data.findIndex(({id}) => id === Number(number));
+    data[result].done = true;
+    data[result].review = false;
+    this.setState({
+      data: data,
+    })
   }
 
   /**
-   * 確認待ちへ移動させる
+   * prev タスク
    * @param number //タスクのid 
    */
-  changeReview(number){
-    const bool = window.confirm("タスクを確認リストへ移動しますか？");
-    if (bool === true) {
-      const data = this.state.data.slice();
-      // 確認待ちにしたいタスクのidを連想配列から検索
-      const result = data.findIndex(({id}) => id === Number(number));
-      data[result].review = true;
-      data[result].doing = false;
-      data[result].comment = [];
-      this.setState({
-        data: data
-      })
-    }
-  }
+  prevTodo(number){
+    console.log("todo")
+    const data = this.state.data.slice();
+    const result = data.findIndex(({id}) => id === Number(number));
+    data[result].notYet = true;
+    data[result].doing = false;
+    this.setState({
+      data: data,
+    })
 
-  /**
-   * 完了に移動させる
-   * @param number //タスクのidを取得
-   */
-  changeDone(number){
-    const bool = window.confirm("タスクを完了しますか？");
-    if (bool === true) {
-      const data = this.state.data.slice();
-      // 完了したいタスクのidを連想配列から検索
-      const result = data.findIndex(({id}) => id === Number(number));
-      data[result].done = true;
-      data[result].review = false;
-      this.setState({
-        data: data,
-      })
-    }
+  }
+  prevDoing(number){
+    const data = this.state.data.slice();
+    const result = data.findIndex(({id}) => id === Number(number));
+    data[result].doing = true;
+    data[result].review = false;
+    this.setState({
+      data: data,
+    })
+  }
+  prevReview(number){
+    const data = this.state.data.slice();
+    const result = data.findIndex(({id}) => id === Number(number));
+    data[result].review = true;
+    data[result].done = false;
+    this.setState({
+      data: data,
+    })
   }
 
   /**
@@ -209,6 +232,19 @@ export class App extends React.Component{
       })
     }
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   // リセット
   resetTodo(){
@@ -457,7 +493,7 @@ export class App extends React.Component{
             editTitle={this.editTitle}
             editContent={this.editContent}
             editError={editError}
-            changeDoing={this.changeDoing}
+            nextDoing={this.nextDoing}
             changeEdit={this.changeEdit}
             isUp={this.isUp}
             isDown={this.isDown}
@@ -465,8 +501,6 @@ export class App extends React.Component{
             openTodo={this.openTodo}
 
           />
-
-          <br/><br/><br/><br/>
 
           <Doing 
             data={data}
@@ -474,22 +508,22 @@ export class App extends React.Component{
             editTitle={this.editTitle}
             editContent={this.editContent}
             editError={editError}
-            changeReview={this.changeReview}
+            nextReview={this.nextReview}
             changeEdit={this.changeEdit}
             isUp={this.isUp}
             isDown={this.isDown}
 
             openTodo={this.openTodo}
 
-          />
+            prevTodo={this.prevTodo}
 
-          <br/><br/><br/><br/>
+          />
 
           {/* 確認まちタスク */}
           <Review 
             data={data}
             deleteComment={this.deleteComment}
-            changeDone={this.changeDone}
+            nextDone={this.nextDone}
             addComment={this.addComment}
             changeComment={this.changeComment}
             commentError={commentError}
@@ -499,9 +533,9 @@ export class App extends React.Component{
 
             openTodo={this.openTodo}
 
+            prevDoing={this.prevDoing}
+
           />
-          
-          <br/><br/><br/><br/>
           
           {/* 完了タスク */}
           <Done 
@@ -511,6 +545,8 @@ export class App extends React.Component{
             isDown={this.isDown}
 
             openTodo={this.openTodo}
+
+            prevReview={this.prevReview}
           />
         </main>
       </>

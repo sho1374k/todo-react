@@ -27,12 +27,15 @@ $base-color:#EEF0F4;
   }
   &-btns{
     @include position(absolute, none, 2vw, 1vh, none);
-    .btn-reset{
-      margin: 10px;
-      color: red;
-      height: 5vh;
-      width: 7vh;
-      padding: 5px 0 0 0 ;
+    display: flex;
+    &-reset{
+      .btn-reset{
+        margin: 10px;
+        color: red;
+        height: 5vh;
+        width: 7vh;
+        padding: 5px 0 0 0 ;
+      }
     }
     .btn-open-form{
       margin: 10px;
@@ -42,9 +45,16 @@ $base-color:#EEF0F4;
       color: $blue;
       font-size: 20px;
     }
+    .btn-close-form{
+      margin: 10px;
+      padding: 0px;
+      height: 5vh;
+      width: 5vh;
+      color: red;
+      font-size: 20px;
+    }
   }
 }
-
 // btn
 .btn{
   padding: 10px;
@@ -72,11 +82,10 @@ main{
 // form
 .modal{
   @include position(fixed, 0, 0, none,none );
-  background-color: rgba(0, 0, 0, 0.757);
   z-index: 9999;
-  transform: rotateZ(9999px);
   width: 100vw;
 }
+
 .form{
   @include position(absolute,0,0,0,0 );
   margin: auto;
@@ -84,6 +93,7 @@ main{
   width: 50vh;
   background-color: $base-color;
   border-radius: 5px;
+  box-shadow:  inset 2px 2px 5px #BABECC, inset -5px -5px 10px #fff;
   &-title{
     min-height: 5vh;
     padding: 10px;
@@ -189,6 +199,8 @@ main{
     border-radius: 5px;
     padding: 10px 5px;
     margin: 20px 10px;
+    animation: true .5s ease-in-out;
+    display: block;
     &-des{
       position: relative;
     }
@@ -196,6 +208,7 @@ main{
       display: flex;
       justify-content: flex-end;
       height: 5vh;
+      z-index: 100;
       .btn{
         margin: 5px;
         &:hover{
@@ -219,6 +232,7 @@ main{
 }
 
 
+
 //review comment
 .comment{
   position: relative;
@@ -231,6 +245,7 @@ main{
     border-radius: 5px;
     background-color: $base-color;
     box-shadow:  inset 1px 1px 2px #BABECC, inset -1px -1px 2px #fff;
+    animation: true .5s ease-in-out;
     &-des{
       padding: 5px 5px;
       white-space: pre-line;
@@ -276,6 +291,7 @@ main{
 
 // comment
 .commentForm{
+  animation: true .5s ease-in-out;
   &-text{
     min-height: 2vh;
     padding: 10px;
@@ -337,15 +353,21 @@ main{
 
 // edit form
 .edit{
+  animation: true .5s ease-in-out;
   &-id {
     position: relative;
     &-box{
       font-family: $family;
-    @include position(absolute,-25px,none ,none ,-10px );
-    padding:3px 10px;
-    background-color: $base-color;
-    box-shadow:  inset 2px 2px 5px #BABECC, inset -5px -5px 10px #fff;
-    border-radius: 10%;
+      @include position(absolute,-4.5vh,none ,none ,-10px );
+      height: 4vh;
+      width: 4vh;
+      padding: 0;
+      text-align: center;
+      line-height: 4vh;
+      background-color: $base-color;
+      border-radius: 10%;
+      box-shadow: $shadow;
+      font-size:20px;
     }
   }
   &-title{
@@ -454,8 +476,19 @@ main{
     text-decoration:underline;
   }
   &_content{
+    animation: true .5s ease-in-out;
     padding: 10px 0px;
     white-space: pre-line;
     font-size: 1vw;
+  }
+}
+
+@keyframes true {
+  0% {
+    opacity: 0;
+    display:none;
+  }
+  100% {
+    opacity: 1;
   }
 }

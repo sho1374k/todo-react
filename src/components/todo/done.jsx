@@ -14,10 +14,10 @@ export const Done = (props) => {
       {props.data.sort((a, b) => a.id - b.id).map((todo, i) => {
         let number = todo.id 
         return(
-          <div key={i} onClick={() => props.openTodo(number)}>
+          <div key={i}>
           {todo.done === true &&
             <div className="done-content" key={i}>
-              <div className="done-content-des" key={i}>
+              <div className="done-content-des" key={i} onClick={() => props.openTodo(number)}>
                 <IndividualTodo 
                   todo={todo}
                 />

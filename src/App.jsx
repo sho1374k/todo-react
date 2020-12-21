@@ -2,6 +2,8 @@ import React from "react";
 // CSS
 import './assets/sass/reset.scss';
 import './assets/sass/style.scss';
+// npm
+import { Transition } from 'react-transition-group';
 // Components
 import {Header} from "./components/header/header";
 import {Form} from "./components/form/form";
@@ -15,13 +17,13 @@ export class App extends React.Component{
     super(props);
     this.state = {
       data:[
-        {id:1, title: "タイトル1", content: "コンテンツ1", open: false, notYet: true, doing: false, review: false,  done: false, edit: false, comment: [], commentForm: false  ,openComment: true,},
-        {id:2, title: "タイトル2", content: "コンテンツ2", open: false, notYet: true, doing: false, review: false,  done: false, edit: false, comment: [], commentForm: false  ,openComment: true,},
-        {id:3, title: "タイトル3", content: "コンテンツ3", open: false, notYet: true, doing: false, review: false,  done: false, edit: false, comment: [], commentForm: false  ,openComment: true,},
-        {id:4, title: "タイトル4", content: "コンテンツ4", open: false, notYet: false, doing: false, review: true,  done: false, edit: false, comment: [{text: "aaa"},], commentForm: false  ,openComment: false,},
-        {id:5, title: "タイトル5", content: "コメントのON、OFFの切り替え実装", open: false, notYet: false, doing: true, review: false,  done: false, edit: false, comment: [], commentForm: false  ,openComment: true,},
-        {id:6, title: "タイトル6", content: "コンテンツ6", open: false, notYet: false, doing: false, review: false,  done: true, edit: false, comment: [{text: "コメント１"}, {text: "コメント2"}], commentForm: false  ,openComment: false,},
-        {id:7, title: "タイトル7", content: "コンテンツ7", open: false, notYet: true, doing: false, review: false,  done: false, edit: false, comment: [], commentForm: false },
+        {id:1, title: "環境構築", content: "ReactのGatsbyJS(静的サイトジェネレータ)のブログテーマを使用して構築する", open: false, notYet: false, doing: false, review: false,  done: true, edit: false, comment: [], commentForm: false  ,openComment: false,},
+        {id:2, title: "GitHubで管理する", content: "gitを使用してGittHubでソースコードを管理する", open: false, notYet: false, doing: false, review: true,  done: false, edit: false, comment: [{text: "OK"}], commentForm: false  ,openComment: false,},
+        {id:3, title: "トップページ作成", content: "iTyped、react-modalを使用する、", open: false, notYet: false, doing: false, review: true,  done: false, edit: false, comment: [{text: "○○を修正しましょう"}, {text: "了解です"}], commentForm: false  ,openComment: false,},
+        {id:4, title: "各ページ作成", content: "particles、framer-motion、transition-groupを使用してアニメーションを追加する", open: false, notYet: false, doing: false, review: true,  done: false, edit: false, comment: [], commentForm: false  ,openComment: false,},
+        {id:5, title: "ブログ機能", content: "gatsby-node.jsからブログ機能作成しCMS投稿、更新できるように設定する", open: false, notYet: false, doing: true, review: false,  done: false, edit: false, comment: [], commentForm: false  ,openComment: false,},
+        {id:6, title: "メールフォーム作成", content: "Slack Incoming WebhookのAPIを取得して実装する", open: false, notYet: true, doing: false, review: false,  done: false, edit: false, comment: [], commentForm: false  ,openComment: false,},
+        {id:7, title: "デプロイ", content: "Netlifyを使用してデプロイする", open: false, notYet: true, doing: false, review: false,  done: false, edit: false, comment: [], commentForm: false },
       ],
       error:{
         errorTitle: false,
@@ -150,20 +152,24 @@ export class App extends React.Component{
     if (value ===  "doing") {
       data[result].doing = true;
       data[result].notYet = false;
+      data[result].open = false;
     }
     if (value === "review") {
       data[result].review = true;
       data[result].doing = false;
+      data[result].open = false;
     }
     if (value === "done") {
       data[result].done = true;
       data[result].review = false;
+      data[result].open = false;
     }
     this.setState({
       data: data
     })
-   }
-   nextDoing(number){
+  }
+
+  nextDoing(number){
      this.isNext("doing",number);
    }
    nextReview(number){
@@ -184,14 +190,17 @@ export class App extends React.Component{
     if (value === "todo") {
       data[result].notYet = true;
       data[result].doing = false;
+      data[result].open = false;
     }
     if (value == "doing") {
       data[result].doing = true;
       data[result].review = false;
+      data[result].open = false;
     }
     if (value === "review") {
       data[result].review = true;
-    data[result].done = false;
+      data[result].done = false;
+      data[result].open = false;
     }
     this.setState({
       data: data,
@@ -215,6 +224,7 @@ export class App extends React.Component{
     const bool = window.confirm("タスクを削除しますか？");
     if (bool === true) {
       const data = this.state.data.slice();
+      data.sort((a, b) => a.id - b.id);
       // 削除したいタスクのidを連想配列から検索
       const result = data.findIndex(({id}) => id === Number(number));
       // 配列のresult番目を1つ切り取る
@@ -438,15 +448,51 @@ export class App extends React.Component{
   }
   render(){
     const {data, error, editError, commentError, openTodo} = this.state;
+    const open_todo = {
+      entering: {
+        transition: 'all .5s ease',
+        opacity: 0,
+        transformOrigin: "center",
+        transform: "scale(0, 1)"
+        
+      },
+      // バックになった時
+      entered: {
+        transition: 'all .5s ease',
+        opacity: 1,
+        transformOrigin: "center",
+        transform: "scale(1, 1)"
+      },
+      // バックからフロントにいく時
+      exiting: {
+        transition: 'all .5s ease',
+        opacity: 0,
+        transformOrigin: "center",
+        transform: "scale(0, 1)"
+      },
+      // フロントになった時
+      exited: {
+        transition: 'all .5s ease',
+        opacity: 1,
+        transformOrigin: "center",
+        transform: "scale(1, 1)"
+      }
+    }
     return(
       <>
-        <Header resetTodo={this.resetTodo} handleTodo={this.handleTodo} />
-        <main>
-          <Form 
-            openTodo={openTodo} addTodo={this.addTodo}
-            error={error}       handleTodo={this.handleTodo}
-          />
-
+        <Header resetTodo={this.resetTodo} handleTodo={this.handleTodo} openTodo={this.state.openTodo}/>
+        <Transition in={openTodo} timeout={500}>
+          {state => (
+            <div  style={open_todo[state]}>
+              { openTodo ?
+              <main>
+                <Form 
+                  openTodo={openTodo} addTodo={this.addTodo}
+                  error={error}       handleTodo={this.handleTodo}
+                />
+              </main>
+              :
+              <main>
           <TodoList 
             data={data}                  editTodo={this.editTodo}
             editTitle={this.editTitle}   editContent={this.editContent}
@@ -478,7 +524,11 @@ export class App extends React.Component{
             isUp={this.isUp}         isDown={this.isDown}
             openTodo={this.openTodo} prevReview={this.prevReview}
           />
-        </main>
+          </main>
+              }
+            </div>
+          )}
+        </Transition>
       </>
     )
   }

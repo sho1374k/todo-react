@@ -16,10 +16,10 @@ export const Review = (props) => {
         let number = todo.id;
         let commentArray = todo.comment;
         return(
-          <div key={i} onClick={() => props.openTodo(number)}>
+          <div key={i}>
           {todo.review === true &&
             <div className="review-content">
-              <div className="review-content-des">
+              <div className="review-content-des" onClick={() => props.openTodo(number)}>
                 <IndividualTodo 
                   todo={todo}
                 />

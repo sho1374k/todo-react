@@ -1,9 +1,8 @@
 import React from "react";
-
+// npm
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEllipsisH, faForward } from "@fortawesome/free-solid-svg-icons";
-
-
+// components
 import {EditForm} from "../form/edit-form";
 import {IndividualTodo} from "./individual-todo";
 import {Btn} from "../button/btn";
@@ -16,20 +15,15 @@ export const TodoList = (props) => {
       <h2 className="todo-title">Todo List</h2>
       {props.data.sort((a, b) => a.id - b.id).map((todo, i) => {
         let number = todo.id
-        
         return(
           <div key={number} onClick={() => props.openTodo(number)}>
             { todo.edit === true && todo.notYet === true?
               <div className="todo-content" key={i}>
                 <EditForm 
-                  editTodo={props.editTodo}
-                  editTitle={props.editTitle}
-                  editContent={props.editContent}
-                  editError={props.editError}
-                  changeEdit={props.changeEdit}
-                  number={number}
-                  todo={todo}
-                  i={i}
+                  editTodo={props.editTodo}         editTitle={props.editTitle}
+                  editContent={props.editContent}   editError={props.editError}
+                  changeEdit={props.changeEdit}     number={number}
+                  todo={todo} i={i}
                 />
               </div>
             :
@@ -45,10 +39,8 @@ export const TodoList = (props) => {
                   <div className="todo-content-btns">
                     <Btn  name={<FontAwesomeIcon className="font" icon={faEllipsisH} />} styleName={"btn btn-edit-todo"} actionClick={props.changeEdit} value={number} i={String} />
                     <Order
-                      isUp={props.isUp}
-                      isDown={props.isDown}
-                      number={number}
-                      lenght={lenght}
+                      isUp={props.isUp} isDown={props.isDown}
+                      number={number}   lenght={lenght}
                     />
                     <Btn  name={<FontAwesomeIcon className="font" icon={faForward} />} styleName={"btn btn-next"} actionClick={props.nextDoing} value={number} i={String} />
                   </div>

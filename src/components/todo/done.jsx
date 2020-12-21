@@ -1,7 +1,9 @@
 import React from "react";
+// npm
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashAlt} from "@fortawesome/free-regular-svg-icons";
 import { faBackward } from "@fortawesome/free-solid-svg-icons";
+// components
 import {IndividualTodo} from "./individual-todo";
 import {Btn} from "../button/btn";
 

@@ -1,8 +1,9 @@
 import React from "react";
+// npm
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes, faCommentMedical, faForward, faBackward } from "@fortawesome/free-solid-svg-icons";
 import { faTrashAlt, faComment } from "@fortawesome/free-regular-svg-icons";
-
+// components
 import {IndividualTodo} from "./individual-todo";
 import {CommentForm} from "../form/comment-form";
 import {Btn} from "../button/btn";
@@ -43,24 +44,21 @@ export const Review = (props) => {
                   } 
                 </div>
               </div>
-
               {todo.commentForm === true ?
-                <>
-                  <CommentForm 
-                    addComment ={props.addComment}
-                    commentError={props.commentError}
-                    changeComment={props.changeComment}
-                    number={number}
-                  />
-                </>
+                <CommentForm 
+                  addComment ={props.addComment}
+                  commentError={props.commentError}
+                  changeComment={props.changeComment}
+                  number={number}
+                />
               :
               <div className="review-content-btns">
                 <Btn  name={<FontAwesomeIcon className="font" icon={faBackward} />} styleName={"btn btn-prev"} actionClick={props.prevDoing} value={number} i={i} />
                 <Btn  name={<FontAwesomeIcon className="font" icon={faCommentMedical} />} styleName={"btn btn-comment-create"} actionClick={props.changeComment} value={number} i={i} />
                 {commentArray.length > 0 && todo.openComment === false ?
-                    <button className="btn btn-comment-open" onClick={() => props.handleCommnet(number, i)}>
-                      <FontAwesomeIcon className="font" icon={faComment} /> <span>{commentArray.length}</span>
-                    </button>
+                  <button className="btn btn-comment-open" onClick={() => props.handleCommnet(number, i)}>
+                    <FontAwesomeIcon className="font" icon={faComment} /> <span>{commentArray.length}</span>
+                  </button>
                 :
                   <>
                     {commentArray.length > 0 && 
@@ -69,7 +67,6 @@ export const Review = (props) => {
                   </>
                 }
                 <Btn  name={<FontAwesomeIcon className="font" icon={faForward} />} styleName={"btn btn-next"} actionClick={props.nextDone} value={number} i={i} />
-
               </div>
               }
             </div>

@@ -4,6 +4,7 @@ import './assets/sass/reset.scss';
 import './assets/sass/style.scss';
 // npm
 import { Transition } from 'react-transition-group';
+import { animateScroll as scroll } from 'react-scroll';
 // Components
 import {Header} from "./components/header/header";
 import {Form} from "./components/form/form";
@@ -11,6 +12,7 @@ import {TodoList} from "./components/todo/todo-list";
 import {Doing} from "./components/todo/doing";
 import {Review} from "./components/todo/review";
 import {Done} from "./components/todo/done";
+
 
 export class App extends React.Component{
   constructor(props){
@@ -108,7 +110,7 @@ export class App extends React.Component{
         id: Number(countNum) + 1, 
         title: title,    content: content,   open:false,      edit: false,
         notYet: true,    doing: false,       review: false,   done: false,
-        commemt: [],     commentForm: false, openComment: true,
+        comment: [],     commentForm: false, openComment: true,
       })
       // 更新
       this.setState({
@@ -120,11 +122,13 @@ export class App extends React.Component{
         commentError: false,
         openTodo: false,
       })
+      
     }
     // フォームのリセット
     event.target.title.value = "";
     event.target.content.value = "";
   }
+
 
   /**
    * タスク詳細opne
@@ -147,8 +151,10 @@ export class App extends React.Component{
    */
   isNext(value, number) {
     const data = this.state.data.slice();
+    
     // 実行中に移動させるタスクのidを連想配列から検索
     const result = data.findIndex(({id}) => id === Number(number));
+
     if (value ===  "doing") {
       data[result].doing = true;
       data[result].notYet = false;
@@ -158,6 +164,7 @@ export class App extends React.Component{
       data[result].review = true;
       data[result].doing = false;
       data[result].open = false;
+      
     }
     if (value === "done") {
       data[result].done = true;
@@ -499,6 +506,8 @@ export class App extends React.Component{
             editError={editError}        nextDoing={this.nextDoing}
             changeEdit={this.changeEdit} openTodo={this.openTodo}
             isUp={this.isUp}             isDown={this.isDown}
+            el={this.el}
+            
           />
 
           <Doing 

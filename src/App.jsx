@@ -198,7 +198,7 @@ export class App extends React.Component{
       data[result].doing = false;
       data[result].open = false;
     }
-    if (value == "doing") {
+    if (value === "doing") {
       data[result].doing = true;
       data[result].review = false;
       data[result].open = false;
@@ -489,7 +489,7 @@ export class App extends React.Component{
         <Header resetTodo={this.resetTodo} handleTodo={this.handleTodo} openTodo={this.state.openTodo}/>
         <Transition in={openTodo} timeout={500}>
           {state => (
-            <div  style={open_todo[state]}>
+            <div style={open_todo[state]}>
               { openTodo ?
               <main>
                 <Form 

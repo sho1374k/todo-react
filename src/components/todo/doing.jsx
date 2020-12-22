@@ -36,8 +36,8 @@ export const Doing = (props) => {
                 />
               </div>
               <div className="doing-content-btns">
-              <Btn  name={<FontAwesomeIcon className="font" icon={faBackward} />} styleName={"btn btn-prev"} actionClick={props.prevTodo} value={number} i={i} />
-                <Btn  name={<FontAwesomeIcon className="font" icon={faEllipsisH} />} styleName={"btn btn-edit-todo"} styleName={"btn btn-edit-todo"} actionClick={props.changeEdit} value={number} i={String} />
+                <Btn  name={<FontAwesomeIcon className="font" icon={faBackward} />} styleName={"btn btn-prev"} actionClick={props.prevTodo} value={number} i={String} />
+                <Btn  name={<FontAwesomeIcon className="font" icon={faEllipsisH} />} styleName={"btn btn-edit-todo"} actionClick={props.changeEdit} value={number} i={String} />
                 <Order
                   isUp={props.isUp}
                   isDown={props.isDown}

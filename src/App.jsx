@@ -4,7 +4,6 @@ import './assets/sass/reset.scss';
 import './assets/sass/style.scss';
 // npm
 import { Transition } from 'react-transition-group';
-import { animateScroll as scroll } from 'react-scroll';
 // Components
 import {Header} from "./components/header/header";
 import {Form} from "./components/form/form";
